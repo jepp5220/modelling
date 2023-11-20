@@ -1,0 +1,31 @@
+class Account
+instance variables
+    private owner: Customer;
+    private balance: nat;
+operations
+    public Account: Customer * nat ==> Account
+    Account(customer,initial_balance) ==(
+        owner := customer;
+        balance := initial_balance;
+    );
+    public addMoney: nat1 ==> ()
+    addMoney(amount) == (
+        --cant add negative or 0 value
+        balance := balance + amount;
+    );
+    public withdrawMoney: nat1 ==> ()
+    withdrawMoney(amount) ==(
+        --cant withdraw 0/negative values
+        balance := balance - amount;
+    );
+    public getBalance: () ==> nat
+    getBalance() == (
+        return balance;
+    );
+    --force changes owner. not sure this is best practice. 
+    --Will probably be better w multiple owners allowed. 
+    public setOwner: Customer ==> ()
+    setOwner(newOwner) == (
+        owner := newOwner;
+    );
+end Account

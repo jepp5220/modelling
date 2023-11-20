@@ -1,0 +1,20 @@
+class Customer
+instance variables
+    private name: seq of char;
+    private address: seq of char;
+    private customerId: nat;
+operations
+    public Customer: seq of char * seq of char * nat ==> Customer
+    Customer(n,add,id) == (
+        name := n;
+        address := add;
+        customerId := id;
+    );
+    --getters/setters
+    public getCustomerId: () ==> nat
+    getCustomerId() == (return customerId);
+    public getName: () ==> seq of char
+    getName() == (return name);
+    public getAddress: () ==> seq of char
+    getAddress() == (return address);
+end Customer

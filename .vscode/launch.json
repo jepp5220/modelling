@@ -1,0 +1,12 @@
+{
+    "configurations": [
+        {
+            "name": "Lens config: Launch account`getBalance",
+            "type": "vdm",
+            "request": "launch",
+            "noDebug": true,
+            "defaultName": "account",
+            "command": "p new account().getBalance()"
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+\section{Credit Card}
+Pincode, Cardnumber, Bank Associated?, experiation date
+\begin{vdm_al}
+class Card
+instance variables
+    private cardNumber: seq of char;
+    private expDate: seq of char;
+    private cardOwner: seq of char;
+operations
+    --Constructor
+    public Card: seq of char * seq of char * seq of char ==> Card
+    Card(num,date,owner) == (
+        cardNumber := num;
+        expDate := date;
+        cardOwner := owner;
+        return self;
+    );
+    --Getters/Setters
+    --getcnumber, get owner, get exp date
+    public getCardNumber: () ==> seq of char
+    getCardNumber()==(return cardNumber);
+    
+    public getExpDate: () ==> seq of char
+    getExpDate()==(return expDate);
+
+    public getCardOwner: () ==> seq of char
+    getCardOwner()==(return cardOwner);
+    --check if expired?
+    --deactivate card
+end Card
+\end{vdm_al}

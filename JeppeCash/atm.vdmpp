@@ -1,0 +1,60 @@
+class Dispensor -- the actual till. Make it part of atm?
+instance variables
+    private avaliableFunds: nat;
+operations
+    public Dispensor: nat ==> Dispensor
+    Dispensor(bal) == (
+        avaliableFunds := bal;
+    );
+    public setMoney: nat ==> ()
+    setMoney(amount) == (
+        avaliableFunds := amount;
+    ); 
+    public getAvaliable: () ==> nat
+    getAvaliable() == (
+        return avaliableFunds;
+    );
+    public addMoney: nat ==> () 
+    addMoney(amount) == (
+        avaliableFunds := avaliableFunds + amount;
+    );
+    public removeMoney: nat ==> ()
+    removeMoney(amount) == (
+        avaliableFunds := avaliableFunds - amount;
+    );
+end Dispensor
+
+class Atm
+types
+    public Status = <Online> | <Offline>;
+instance variables
+    private atmId: nat;
+    private location: seq of char;
+    private atmStatus: Status;
+    private startCapital: nat;
+    private cashDispensor: Dispensor;
+operations
+    public Atm: nat * seq of char * nat==> Atm
+    Atm(id,loc,money) == (
+        atmId := id;
+        location := loc;
+        atmStatus := <Online>;
+        startCapital := money;
+        cashDispensor := new Dispensor(money);
+        return self;
+    );
+    public setStatus: Status ==> ()
+    setStatus(newStatus) == (
+        atmStatus := newStatus;
+    );
+    public Withdraw: nat ==> ()
+    Withdraw(amount) == (
+        cashDispensor.removeMoney(amount);
+      --  cashDispensor.setMoney()
+        --withdraw money
+    );
+    public getStatus: () ==> Status
+    getStatus() == (
+        return atmStatus;
+    );
+end Atm
