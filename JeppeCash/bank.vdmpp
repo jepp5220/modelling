@@ -1,15 +1,26 @@
+--Bank class handles customer accusition, validations, blocking of cards etc
+--main logic is performed here
+
 class Bank
 instance variables
     private bankId: nat;
     private name: seq of char;
     private customers: set of Customer;--map nat to Account := {|->}; --create empty mapping from accounts to bankid
+    private atm : Atm; --bank owns atms
+    private validCards : set of Card; --cards associated with this bank
+    private blockedCards : set of Card; --cards r blocked if pin is wrong 3 times
 operations
     public Bank: nat * seq of char ==> Bank
     Bank(id,bankName) == (
         bankId := id;
         name := bankName;
         customers := {};
+        validCards := {};
+        blockedCards := {};
+        atm := new Atm(bankId,self,"Location",5000);
+        return self;
     ); 
+    
     --Adds a new customer to the bank(set).
     public addCustomer: Customer ==> ()
     addCustomer(newCustomer) == (
@@ -22,20 +33,22 @@ operations
     removeCustomer(removableCustomer) == (
         customers := customers \ {removableCustomer};
     );
-    --public getAccFromId()
 
     --Given an account, add ownership to a customer. Need to fix for multiple ownerships
     
     public addAccountToUser: Customer * Account ==> () 
     addAccountToUser(customer,newAcc) ==(
         newAcc.setOwner(customer);
+        --add acc to his list too
     );
 
+    --if card is valid, returns true, if not returns false
+    public validateCard: Card ==> bool
+    validateCard(cardUT) == (
+        return cardUT in set validCards;  
+    );
     --getacc from number
     --add account to customer
     --remove account from customer
     --add card to account
-    --validate card(in set of cards associated with bank?)
-    --validate pin(does pin correspond to card?)
-    --
 end Bank

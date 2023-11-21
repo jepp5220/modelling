@@ -3,13 +3,16 @@ instance variables
     private name: seq of char;
     private address: seq of char;
     private customerId: nat;
+    private accounts : set of Account;
 operations
     public Customer: seq of char * seq of char * nat ==> Customer
     Customer(n,add,id) == (
         name := n;
         address := add;
         customerId := id;
+        accounts := {};
     );
+
     --getters/setters
     public getCustomerId: () ==> nat
     getCustomerId() == (return customerId);
@@ -17,4 +20,11 @@ operations
     getName() == (return name);
     public getAddress: () ==> seq of char
     getAddress() == (return address);
+
+    public addAccount: Account ==> ()
+    addAccount(newAcc) == (
+        accounts := accounts union {newAcc};
+    );
+
+
 end Customer

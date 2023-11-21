@@ -27,19 +27,26 @@ end Dispensor
 class Atm
 types
     public Status = <Online> | <Offline>;
+    public Occupancy = <Occupied> | <Free>;
 instance variables
     private atmId: nat;
     private location: seq of char;
     private atmStatus: Status;
+    private atmOccupancy: Occupancy;
     private startCapital: nat;
     private cashDispensor: Dispensor;
+    private associatedBank: Bank;
+    private currentCard: [Card]; --optional type
 operations
-    public Atm: nat * seq of char * nat==> Atm
-    Atm(id,loc,money) == (
+    public Atm: nat * Bank * seq of char * nat==> Atm
+    Atm(id,aBank,loc,money) == (
         atmId := id;
         location := loc;
         atmStatus := <Online>;
+        atmOccupancy := <Free>;
         startCapital := money;
+        associatedBank:= aBank;
+        currentCard := nil;
         cashDispensor := new Dispensor(money);
         return self;
     );
@@ -56,5 +63,25 @@ operations
     public getStatus: () ==> Status
     getStatus() == (
         return atmStatus;
+    );
+    public isFree:() ==> bool
+    isFree() ==(
+        return atmOccupancy = <Free>; --if free return true
+    );
+    --public setOccupancy()
+    public insertCard: Card ==> ()
+    insertCard(insertedCard) == (
+        if (isFree()) then (
+            currentCard := insertedCard;
+            atmOccupancy:= <Occupied>;
+            )
+        else(
+            IO`println("Machine is occupied. Try again later");
+        )
+    ); 
+    public ejectCard: () ==> () 
+    ejectCard() ==(
+        currentCard := nil;
+        atmOccupancy := <Free>;
     );
 end Atm

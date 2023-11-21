@@ -6,13 +6,15 @@ instance variables
     private cardNumber: seq of char;
     private expDate: seq of char;
     private cardOwner: seq of char;
+    private pinCode: nat; --Should i make it sequence instead?
 operations
     --Constructor
-    public Card: seq of char * seq of char * seq of char ==> Card
-    Card(num,date,owner) == (
+    public Card: seq of char * seq of char * seq of char * nat==> Card
+    Card(num,date,owner,pin) == (
         cardNumber := num;
         expDate := date;
         cardOwner := owner;
+        pinCode := pin;
         return self;
     );
     --Getters/Setters
@@ -25,7 +27,18 @@ operations
 
     public getCardOwner: () ==> seq of char
     getCardOwner()==(return cardOwner);
-    --check if expired?
-    --deactivate card
+
+    public setPinCode: nat ==> ()
+    setPinCode(newPin)==(
+        pinCode := newPin;
+    );
+    public validatePin: nat ==> bool
+    validatePin(pinAttempt) == (
+        return pinAttempt = pinCode;
+    );
+
+    
+
+    --check if expired - need some notion of time, global class perhaps?
 end Card
 \end{vdm_al}
