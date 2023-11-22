@@ -1,0 +1,23 @@
+--Simulates a UX display.
+class Display
+instance variables
+    private connected_atm : Atm;
+
+operations
+    --constructor
+    public Display: Atm ==> Display
+    display(atm) ==> (
+        connected_atm := atm;
+    );
+    public printString: seq of char ==> () 
+    printString(value) == (
+        IO`println(value);
+    );
+    public printTransaction: Transaction ==> ()
+    printTransaction(trans) == (
+        --pre trans not nil?
+        println("Transaction Type: ",trans.getType());
+        println("Transaction Amount:",trans.getAmount());
+        println("Date: Placeholder");
+    );
+end Display

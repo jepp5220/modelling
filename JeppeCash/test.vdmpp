@@ -1,0 +1,11 @@
+class initialTest
+values
+    c1 : Card = new Card();
+    cards : set of Card = {c1};
+    bank : Bank = new Bank();
+operations
+public Run : () ==> bool
+Run () == (
+    
+);
+end initialTest

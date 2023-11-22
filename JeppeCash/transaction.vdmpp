@@ -1,0 +1,22 @@
+class Transaction
+
+types
+    public Type = <Deposit> | <Withdrawal> | <Statement>;
+instance variables
+    public amount: real;
+    public type : Type; 
+operations
+    public Transaction: real * Type ==> Transaction
+    Transaction(val,type) == (
+        amount := val;
+        self.type := type;
+    );
+    public getAmount: () ==> ()
+    getAmount() == (
+        return amount;
+    );
+    public getType: () ==> Type
+    getType() == (
+        return type;
+    );
+end Transaction
