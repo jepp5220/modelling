@@ -56,11 +56,34 @@ operations
     setStatus(newStatus) == (
         atmStatus := newStatus;
     );
-    public Withdraw: nat ==> ()
-    Withdraw(amount) == (
-        cashDispensor.removeMoney(amount);
-      --  cashDispensor.setMoney()
-        --withdraw money
+    public withdraw: nat1 ==> ()
+    withdraw(amount) == (
+        if cashDispensor.getAvaliable() < amount then (
+            IO`println("Machine cannot fullfill this request.");
+            return;
+        );
+        if (currentAcc.getBalance() >= amount) then( --user can afford, starting withdrawing process
+            currentAcc.withdrawMoney(amount); --removes the money from the account. 
+            cashDispensor.removeMoney(amount); --simulates money being delivered by the ATM
+            return;
+        ) 
+        else ( --user cannot afford
+            IO`println("Balance too low. Try withdrawing a smaller number.")
+        );
+        --pre machine is occupied, card and acc is not null
+    );
+
+    public deposit: nat1 ==> ()
+    deposit(amount) == (
+        --pre acc/card/occupancy
+        --eventuelt check currentAcc balance og sikre at den bliver ændret
+        dcl initial_balance : nat := currentAcc.getBalance();
+        cashDispensor.addMoney(amount);
+        currentAcc.addMoney(amount);
+        if (initial_balance = currentAcc.getBalance()) then (
+            IO`println("An error has occured. The bank has been notified, please hold.")
+        ); --not sure how better to implement this
+
     );
     public getStatus: () ==> Status
     getStatus() == (
@@ -88,11 +111,17 @@ operations
             IO`println("Machine is occupied. Try again later");
         )
     ); 
-    
+
+    --Simulates the ejection of a card, i.e going back to default state of atm.
     public ejectCard: () ==> () 
     ejectCard() ==(
         currentCard := nil;
         currentAcc := nil;
         atmOccupancy := <Free>;
+    );
+        --'articially' selects an account. Not sure if usefull. 
+    public selectAcc: Account ==> ()
+    selectAcc(acc) == (
+        currentAcc := acc;
     );
 end Atm
