@@ -5,13 +5,15 @@ types
 instance variables
     public amount: real;
     public type : Type; 
+    --date?
+    --id?
 operations
     public Transaction: real * Type ==> Transaction
-    Transaction(val,type) == (
+    Transaction(val,t_type) == (
         amount := val;
-        self.type := type;
+        type := t_type;
     );
-    public getAmount: () ==> ()
+    public getAmount: () ==> nat1
     getAmount() == (
         return amount;
     );
@@ -19,4 +21,5 @@ operations
     getType() == (
         return type;
     );
+    
 end Transaction

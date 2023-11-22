@@ -3,14 +3,14 @@ Pincode, Cardnumber, Bank Associated?, experiation date
 \begin{vdm_al}
 class Card
 instance variables
-    private cardNumber: seq of char;
+    private cardNumber: seq of nat;
     private expDate: seq of char;
     private cardOwner: seq of char;
     private pinCode: nat; --Should i make it sequence instead?
     private account: Account; --Only 1 account per card
 operations
     --Default Constructor, provided all details
-    public Card: seq of char * seq of char * seq of char * nat * Account==> Card
+    public Card: seq of nat * seq of char * seq of char * nat * Account==> Card
     Card(num,date,owner,pin,acc) == (
         cardNumber := num;
         expDate := date;
@@ -20,7 +20,7 @@ operations
         return self;
     );
     --Second constructor, creating a card not associated with a user yet.
-    public Card: seq of char * seq of char * nat==> Card
+    public Card: seq of nat * seq of char * nat==> Card
     Card(num,date,pin) == (
         cardNumber := num;
         expDate := date;
@@ -29,7 +29,7 @@ operations
     );
     --Getters/Setters
     --getcnumber, get owner, get exp date
-    public getCardNumber: () ==> seq of char
+    public getCardNumber: () ==> seq of nat
     getCardNumber()==(return cardNumber);
     
     public getAcc:() ==> Account

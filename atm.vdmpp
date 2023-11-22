@@ -65,6 +65,8 @@ operations
         if (currentAcc.getBalance() >= amount) then( --user can afford, starting withdrawing process
             currentAcc.withdrawMoney(amount); --removes the money from the account. 
             cashDispensor.removeMoney(amount); --simulates money being delivered by the ATM
+            IO`print("Successfully withdrawn: ");
+            IO`println(amount);
             return;
         ) 
         else ( --user cannot afford
@@ -84,12 +86,13 @@ operations
         if (initial_balance = currentAcc.getBalance()) then (
             IO`println("An error has occured. The bank has been notified, please hold.")
         ); --not sure how better to implement this
-
     );
+
     public getStatus: () ==> Status
     getStatus() == (
         return atmStatus;
     );
+
     public isFree:() ==> bool
     isFree() ==(
         return atmOccupancy = <Free>; --if free return true
@@ -125,4 +128,5 @@ operations
     selectAcc(acc) == (
         currentAcc := acc;
     );
+    
 end Atm

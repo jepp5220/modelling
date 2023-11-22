@@ -11,6 +11,7 @@ instance variables
     private blockedCards : set of Card; --cards r blocked if pin is wrong 3 times
     private customers1 : map nat to Customer := {|->};
     private accounts1 : map nat to Account := {|->};
+    --list of transactions, mapped to atm. 
 operations
     public Bank: nat * seq of char ==> Bank
     Bank(id,bankName) == (
@@ -22,7 +23,10 @@ operations
         atm := new Atm(bankId,self,"Location",5000);
         return self;
     ); 
-    
+    public getAtm: () ==> Atm
+    getAtm() == (
+        return atm;
+    );
     --Adds a new customer to the bank(set).
     public addCustomer: Customer ==> ()
     addCustomer(newCustomer) == (
@@ -50,16 +54,17 @@ operations
         cus.removeAccount(acc);
     );
 
-    --test
+    --opens account and associates with account id
+/* 
     public openAccount: () ==> nat
     openAccount() == (
         dcl newAcc: Account := new Account();
         dcl accountID: nat := card(accounts1); --cardinality, size of set
         accounts1 := accounts ++ {accountID |->newAcc};
-        --add account to customer
         return accountID;
 
     );
+*/
     --Adds card to account. 
     public addCardToAccount: Account * Card ==> ()
     addCardToAccount(new_acc,new_card) == (
