@@ -37,6 +37,7 @@ instance variables
     private cashDispensor: Dispensor;
     private associatedBank: Bank;
     private currentCard: [Card]; --optional type
+    private currentAcc: [Account];
 operations
     public Atm: nat * Bank * seq of char * nat==> Atm
     Atm(id,aBank,loc,money) == (
@@ -47,6 +48,7 @@ operations
         startCapital := money;
         associatedBank:= aBank;
         currentCard := nil;
+        currentAcc := nil;
         cashDispensor := new Dispensor(money);
         return self;
     );
@@ -68,20 +70,29 @@ operations
     isFree() ==(
         return atmOccupancy = <Free>; --if free return true
     );
-    --public setOccupancy()
+
+    --Simulates the insertion of card. If the atm is free, it checks if the card is valid
     public insertCard: Card ==> ()
     insertCard(insertedCard) == (
         if (isFree()) then (
-            currentCard := insertedCard;
-            atmOccupancy:= <Occupied>;
+            if (associatedBank.validateCard(insertedCard)) then (
+                currentCard := insertedCard;
+                atmOccupancy:= <Occupied>;
+                currentAcc := insertedCard.getAcc();
             )
+            else (
+                IO`println("Card not recognized.");
+            )
+        )
         else(
             IO`println("Machine is occupied. Try again later");
         )
     ); 
+    
     public ejectCard: () ==> () 
     ejectCard() ==(
         currentCard := nil;
+        currentAcc := nil;
         atmOccupancy := <Free>;
     );
 end Atm

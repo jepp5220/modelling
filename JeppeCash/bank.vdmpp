@@ -41,14 +41,27 @@ operations
         newAcc.setOwner(customer);
         --add acc to his list too
     );
+    public removeAccountFromUser: Customer * Account ==> ()
+    removeAccountFromUser(cus,acc) == (
+        acc.removeOwner();
+        cus.removeAccount(acc);
+    );
 
+    --Adds card to account. 
+    public addCardToAccount: Account * Card ==> ()
+    addCardToAccount(new_acc,new_card) == (
+        new_card.setAccount(new_acc);
+    );
+
+    --removeCardFromAccount?
+
+    public getAccountsFromCustomer: Customer ==> set of Account
+    getAccountsFromCustomer(cus) == (
+        return cus.getAccs();
+    );
     --if card is valid, returns true, if not returns false
     public validateCard: Card ==> bool
     validateCard(cardUT) == (
         return cardUT in set validCards;  
     );
-    --getacc from number
-    --add account to customer
-    --remove account from customer
-    --add card to account
 end Bank

@@ -7,13 +7,23 @@ instance variables
     private expDate: seq of char;
     private cardOwner: seq of char;
     private pinCode: nat; --Should i make it sequence instead?
+    private account: Account; --Only 1 account per card
 operations
-    --Constructor
-    public Card: seq of char * seq of char * seq of char * nat==> Card
-    Card(num,date,owner,pin) == (
+    --Default Constructor, provided all details
+    public Card: seq of char * seq of char * seq of char * nat * Account==> Card
+    Card(num,date,owner,pin,acc) == (
         cardNumber := num;
         expDate := date;
         cardOwner := owner;
+        pinCode := pin;
+        account := acc;
+        return self;
+    );
+    --Second constructor, creating a card not associated with a user yet.
+    public Card: seq of char * seq of char * nat==> Card
+    Card(num,date,pin) == (
+        cardNumber := num;
+        expDate := date;
         pinCode := pin;
         return self;
     );
@@ -22,6 +32,16 @@ operations
     public getCardNumber: () ==> seq of char
     getCardNumber()==(return cardNumber);
     
+    public getAcc:() ==> Account
+    getAcc() == (
+        return account;
+    );
+
+    --Changes the acc associated with a card
+    public setAccount: Account ==> () 
+    setAccount(acc) ==(
+        account := acc;
+    );
     public getExpDate: () ==> seq of char
     getExpDate()==(return expDate);
 

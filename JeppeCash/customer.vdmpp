@@ -20,10 +20,18 @@ operations
     getName() == (return name);
     public getAddress: () ==> seq of char
     getAddress() == (return address);
+    public getAccs: () ==> set of Account
+    getAccs() == (
+        return accounts;
+    );
 
     public addAccount: Account ==> ()
     addAccount(newAcc) == (
         accounts := accounts union {newAcc};
+    );
+    public removeAccount: Account ==> ()
+    removeAccount(rmvAcc) == (
+        accounts := accounts \ {rmvAcc};
     );
 
 

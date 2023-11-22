@@ -1,6 +1,6 @@
 class Account
 instance variables
-    private owner: Customer;
+    private owner: [Customer]; --optional, to allow for 'removeaccfromuser'. Could be an issue with an acc with lots of money having no owner. 
     private balance: nat;
 operations
     public Account: Customer * nat ==> Account
@@ -27,5 +27,9 @@ operations
     public setOwner: Customer ==> ()
     setOwner(newOwner) == (
         owner := newOwner;
+    );
+    public removeOwner: () ==> ()
+    removeOwner() == (
+        owner := nil;
     );
 end Account
