@@ -18,18 +18,16 @@
  );
  end Test1
 */
-
  class atmTests
  operations
     public Run: () ==> ()
     Run() == (
         let ts : TestSuite = new TestSuite(),
         TestResult = new TestResult()
-        in (
-            ts.addTest(new customerTest());
+        in (ts.addTest(new customerTest());
             ts.run(TestResult);
             IO`println(TestResult.toString());
+            --IO`println("Test complete:)");
         );
     );
-
- end atmTests
+end atmTests

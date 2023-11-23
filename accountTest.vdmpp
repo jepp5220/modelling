@@ -1,0 +1,13 @@
+/* class accountTest is subclass of atmTests
+instance variables
+operations
+    public runAccountTest:() ==> ()
+    runAccountTest() == (
+        return;
+      --  createAccountTest();
+    );
+   -- protected createAccountTest:() ==> ()
+    --createAccountTest() == (
+    --    --yadayada
+    --);
+end accountTest */

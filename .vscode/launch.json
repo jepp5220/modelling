@@ -1,12 +1,20 @@
 {
     "configurations": [
-	{
-	    "name": "Launch Modelling Debug 1",
-	    "type": "vdm",
-	    "request": "launch",
-	    "noDebug": false,
-	    "defaultName": "atmTests",
-	    "command": "print new atmTests().Run()"
-	}
-    ]
+		{
+			"name": "Launch Modelling Debug 2",
+			"type": "vdm",
+			"request": "launch",
+			"noDebug": false,
+			"defaultName": "atmTests",
+			"command": "print new atmTests().Run()"
+		},
+		{
+			"name": "Lens config: Launch customerTest`createCustomerTest",
+			"type": "vdm",
+			"request": "launch",
+			"noDebug": true,
+			"defaultName": "customerTest",
+			"command": "p new customerTest().createCustomerTest()"
+		}
+	]
 }
