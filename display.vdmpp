@@ -2,7 +2,7 @@
 class Display
 instance variables
     private connected_atm : Atm;
-
+    public static io : IO := new IO();
 operations
     --constructor
     public Display: Atm ==> Display

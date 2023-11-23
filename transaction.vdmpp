@@ -1,5 +1,4 @@
 class Transaction
-
 types
     public Type = <Deposit> | <Withdrawal> | <Statement>;
 instance variables

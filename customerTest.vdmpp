@@ -1,0 +1,18 @@
+class customerTest is subclass of atmTests
+values
+operations
+    runCustomerTests : () ==> ()
+    runCustomerTests() ==(
+        createCustomerTest();
+    );
+    protected createCustomerTest:() ==> ()
+    createCustomerTest() == (
+      --creating new customer
+      dcl cust_UUT : Customer := new Customer("Jens","Skovvej",21);
+      --checking information is properly filled out
+      assertTrue(cust_UUT.getName() = "Jens");
+      assertTrue(cust_UUT.getAddress() = "Skovvej");
+      assertFalse(card(cust_UUT.getAccs())<>0); --same as assert true, card = 0
+      assertTrue(cust_UUT.getCustomerId() = 21);
+    );
+end customerTest

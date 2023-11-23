@@ -5,8 +5,8 @@
 	    "type": "vdm",
 	    "request": "launch",
 	    "noDebug": false,
-	    "defaultName": "Test",
-	    "command": "print new Test1().Run()"
+	    "defaultName": "atmTests",
+	    "command": "print new atmTests().Run()"
 	}
     ]
 }

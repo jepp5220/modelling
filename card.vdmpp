@@ -4,10 +4,15 @@ Pincode, Cardnumber, Bank Associated?, experiation date
 class Card
 instance variables
     private cardNumber: seq of nat;
+    inv cn == card(cn) == 4; 
     private expDate: seq of char;
     private cardOwner: seq of char;
-    private pinCode: nat; --Should i make it sequence instead?
+    -- no numbers
+    private pinCode: seq of nat; --Should i make it sequence instead?
+    inv pc == card(pc) == 4; 
     private account: Account; --Only 1 account per card
+    
+
 operations
     --Default Constructor, provided all details
     public Card: seq of nat * seq of char * seq of char * nat * Account==> Card
