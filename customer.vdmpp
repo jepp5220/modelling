@@ -13,6 +13,7 @@ operations
         accounts := {};
     );
 
+    --customerid needs to be fixed
     --getters/setters
     public getCustomerId: () ==> nat
     getCustomerId() == (return customerId);

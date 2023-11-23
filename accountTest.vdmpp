@@ -1,13 +1,72 @@
-/* class accountTest is subclass of atmTests
+class accountTest is subclass of TestCase
 instance variables
+  cust : Customer := new Customer("Jens","Skovvej",21); --needed for account creationr
 operations
-    public runAccountTest:() ==> ()
-    runAccountTest() == (
-        return;
-      --  createAccountTest();
+    public runTest:() ==> ()
+    runTest() == (
+      createAccountTest();
+      withdrawMoneyTest();
+      addMoneyTest();
+      setMoneyTest();
+      getOwnerTest();
+      setOwnerTest();
+      removeOwnerTest();
     );
-   -- protected createAccountTest:() ==> ()
-    --createAccountTest() == (
-    --    --yadayada
-    --);
-end accountTest */
+    protected createAccountTest:() ==> ()
+    createAccountTest() == (
+      dcl startCap : nat := 100;
+      dcl acc_uut : Account := new Account(cust,startCap); --100$ start capital
+      --check what happens when u declare negative
+      assertTrue(acc_uut.getBalance() = startCap);
+    );
+
+    protected withdrawMoneyTest: () ==> ()
+    withdrawMoneyTest() == (
+      dcl acc_uut : Account := new Account(cust,100);
+      assertTrue(acc_uut.withdrawMoney(100));
+      assertTrue(acc_uut.getBalance() = 0);
+      acc_uut.setMoney(100); --restart balance
+      assertFalse(acc_uut.withdrawMoney(101));
+      --assertTrue(1=0);
+    );
+    protected addMoneyTest:() ==> ()
+    addMoneyTest() == (
+      dcl acc_uut : Account := new Account(cust,100);
+      assertTrue(acc_uut.getBalance()=100);
+      acc_uut.addMoney(100);
+      assertTrue(acc_uut.getBalance()=200);
+      --If attempting to pass non-positive values, youll get exception.
+    );
+
+    protected getOwnerTest: () ==> ()
+    getOwnerTest() == (
+      dcl acc_uut : Account := new Account(cust,100);
+      assertTrue(acc_uut.getOwner()=cust);
+    );
+
+    protected setOwnerTest: () ==> ()
+    setOwnerTest() == (
+      dcl acc_uut : Account := new Account(cust,100);
+      dcl newCus : Customer := new Customer("Jeppe","Elmevej",10);
+      acc_uut.setOwner(newCus);
+      assertFalse(acc_uut.getOwner() = cust);
+      assertTrue(acc_uut.getOwner()=newCus);
+
+    );
+    protected removeOwnerTest:() ==> () 
+    removeOwnerTest() ==(
+      dcl acc_uut : Account := new Account(cust,100);
+      assertFalse(acc_uut.getOwner() = nil);
+      acc_uut.removeOwner();
+      assertTrue(acc_uut.getOwner() = nil);
+    ); 
+    protected setMoneyTest: () ==> () 
+    setMoneyTest() == (
+      dcl acc_uut : Account := new Account(cust,100);
+      assertTrue(acc_uut.getBalance() = 100);
+      acc_uut.setMoney(999);
+      assertTrue(acc_uut.getBalance() = 999);
+      --assertTrue(1=0)
+    );
+
+end accountTest 

@@ -63,11 +63,14 @@ operations
             return;
         );
         if (currentAcc.getBalance() >= amount) then( --user can afford, starting withdrawing process
-            currentAcc.withdrawMoney(amount); --removes the money from the account. 
-            cashDispensor.removeMoney(amount); --simulates money being delivered by the ATM
-            IO`print("Successfully withdrawn: ");
-            IO`println(amount);
-            return;
+            if (currentAcc.withdrawMoney(amount)) then ( --successfully withdrawn
+                cashDispensor.removeMoney(amount); --simulates money being delivered by the ATM
+                IO`print("Successfully withdrawn: ");
+                IO`println(amount);)
+                else (
+                    IO`println("Uknown error withdrawing.");
+                );
+        return;
         ) 
         else ( --user cannot afford
             IO`println("Balance too low. Try withdrawing a smaller number.")
@@ -123,7 +126,7 @@ operations
         currentAcc := nil;
         atmOccupancy := <Free>;
     );
-        --'articially' selects an account. Not sure if usefull. 
+        --'articially' selects an account. Not sure if usefull yet. 
     public selectAcc: Account ==> ()
     selectAcc(acc) == (
         currentAcc := acc;

@@ -2,6 +2,7 @@ class Account
 instance variables
     private owner: [Customer]; --optional, to allow for 'removeaccfromuser'. Could be an issue with an acc with lots of money having no owner. 
     private balance: nat;
+    inv balance >= 0;
 operations
     public Account: Customer * nat ==> Account
     Account(customer,initial_balance) ==(
@@ -13,20 +14,32 @@ operations
         --cant add negative or 0 value
         balance := balance + amount;
     );
-    public withdrawMoney: nat1 ==> ()
+    public withdrawMoney: nat1 ==> bool --returns success of operation
     withdrawMoney(amount) ==(
         --cant withdraw 0/negative values
-        balance := balance - amount;
+        if (balance - amount >= 0) then (
+            balance := balance - amount;
+            return true;
+        )
+        else (return false;)
     );
     public getBalance: () ==> nat
     getBalance() == (
         return balance;
+    );
+    public getOwner: () ==> [Customer]
+    getOwner() == (
+        return owner;
     );
     --force changes owner. not sure this is best practice. 
     --Will probably be better w multiple owners allowed. 
     public setOwner: Customer ==> ()
     setOwner(newOwner) == (
         owner := newOwner;
+    );
+    public setMoney: nat ==> ()
+    setMoney(amount) == (
+        balance := amount;
     );
     public removeOwner: () ==> ()
     removeOwner() == (

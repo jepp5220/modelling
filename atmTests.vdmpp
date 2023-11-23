@@ -25,6 +25,7 @@
         let ts : TestSuite = new TestSuite(),
         TestResult = new TestResult()
         in (ts.addTest(new customerTest());
+            ts.addTest(new accountTest());
             ts.run(TestResult);
             IO`println(TestResult.toString());
             --IO`println("Test complete:)");
