@@ -56,6 +56,10 @@ operations
     setPinCode(newPin)==(
         pinCode := newPin;
     );
+    public getPinCode: () ==> seq of nat 
+    getPinCode() == (
+        return pinCode;
+    );
     public validatePin: seq of nat ==> bool
     validatePin(pinAttempt) == (
         return pinAttempt = pinCode;

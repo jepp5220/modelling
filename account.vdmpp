@@ -4,11 +4,12 @@ instance variables
     private balance: nat;
     inv balance >= 0;
 operations
-    public Account: Customer * nat ==> Account
+    public Account: [Customer] * nat ==> Account
     Account(customer,initial_balance) ==(
         owner := customer;
         balance := initial_balance;
     );
+
     public addMoney: nat1 ==> ()
     addMoney(amount) == (
         --cant add negative or 0 value

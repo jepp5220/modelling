@@ -26,6 +26,7 @@
         TestResult = new TestResult()
         in (ts.addTest(new customerTest());
             ts.addTest(new accountTest());
+            ts.addTest(new cardTest());
             ts.run(TestResult);
             IO`println(TestResult.toString());
             --IO`println("Test complete:)");
