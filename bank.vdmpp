@@ -72,7 +72,7 @@ operations
 
     );
 
-    --only really used for testing purposes(?)
+    --currently only really used for testing purposes
     public addCardToValid: Card ==> () 
     addCardToValid(cardToAdd) == (
         validCards := validCards union {cardToAdd};
@@ -90,6 +90,6 @@ operations
     --if card is valid, returns true, if not returns false
     public validateCard: Card ==> bool
     validateCard(cardUT) == (
-        return cardUT in set validCards;  
+        return (cardUT in set validCards);  
     );
 end Bank

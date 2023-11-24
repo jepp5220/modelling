@@ -8,7 +8,11 @@ operations
     runTest() == (
         createAtmTest();
         selectAccountTest();
+        setStatusTest();
         insertCardTest();
+        ejectCardTest();
+        depositTest();
+        withdrawTest();
     );
     protected createAtmTest: () ==> ()
     createAtmTest() == (
@@ -26,24 +30,69 @@ operations
         assertTrue(atm_uut.getCurrentAcc()=aux_acc);
         --assertTrue(1=0);
     );
+    protected ejectCardTest:()==>()
+    ejectCardTest() == (
+        dcl atm_uut : Atm := new Atm(0,aux_bank,"aux_bank_location",5000); 
+        atm_uut.selectAcc(aux_acc);
+        assertTrue(atm_uut.getCurrentAcc()= aux_acc);
+        atm_uut.ejectCard();
+        assertTrue(atm_uut.getCurrentAcc() = nil);
+        assertTrue(atm_uut.isFree());
+    );
+
+    protected setStatusTest:()==>()
+    setStatusTest()==(
+        dcl atm_uut : Atm := aux_bank.getAtm();
+        assertTrue(atm_uut.getStatus()=<Online>);
+        atm_uut.setStatus(<Offline>);
+        assertTrue(atm_uut.getStatus()=<Offline>);
+    );
+    --atm_uut not connected to bank, issue! 
     protected insertCardTest:()==>()
     insertCardTest()==(
-        dcl atm_uut : Atm := new Atm(0,aux_bank,"aux_bank_location",5000); 
+        --dcl atm_uut : Atm := new Atm(0,aux_bank,"aux_bank_location",5000); 
+        dcl atm_uut : Atm := aux_bank.getAtm();
         dcl aux_card : Card := new Card([1,2,3,4],"11th December","Jeppe",[9,9,9,9],aux_acc);
         assertTrue(atm_uut.isFree()); --free default
         atm_uut.insertCard(aux_card); --calls validate from bank
         assertTrue(atm_uut.isFree()); --wont change as card isnt validated.
+
+        aux_bank.addCardToValid(aux_card); --validate should work now
+        assertTrue(aux_bank.validateCard(aux_card)); --Checking to ensure
+        --assertTrue(atm_uut.getBank()=aux_bank);
+        --assertTrue(aux_bank.getAtm()=atm_uut);
+        atm_uut.insertCard(aux_card);
+        assertFalse(atm_uut.isFree());
     );
-        /*
-    protected ejectCardTest:()==>()
-    ejectCardTest() == ();
-    
-
-
     protected depositTest:()==>()
-    depositTest() == ();
+    depositTest() == (
+        --neccessary components to test.
+        dcl atm_uut : Atm := aux_bank.getAtm();
+        dcl aux_card : Card := new Card([1,2,3,4],"11th December","Jeppe",[9,9,9,9],aux_acc);
+        dcl initBal : nat := aux_acc.getBalance();
+        aux_bank.addCardToValid(aux_card); --card recognized now
+        atm_uut.insertCard(aux_card);
+        assertFalse(atm_uut.isFree());
+        --testing deposit
+        atm_uut.deposit(50);
+        assertTrue(aux_acc.getBalance()=initBal+50);
+    );
     protected withdrawTest:()==>()
-    withdrawTest() == ();
-    protected setStatusTest:()==>()
-    setStatusTest()==();*/
+    withdrawTest() == (
+        --neccessary components to test.
+        dcl atm_uut : Atm := aux_bank.getAtm();
+        dcl aux_card : Card := new Card([1,2,3,4],"11th December","Jeppe",[9,9,9,9],aux_acc);
+        dcl initBal : nat := aux_acc.getBalance();
+        aux_bank.addCardToValid(aux_card); --card recognized now
+        atm_uut.insertCard(aux_card);
+        assertFalse(atm_uut.isFree());
+        --testing withdraw
+        atm_uut.withdraw(50);
+        assertTrue(aux_acc.getBalance()=initBal-50);
+        --set balance, so other (deposit) tests doesnt interfere with balance
+        aux_acc.setMoney(150);
+        --balance is now 150, attempting to withdraw more
+        atm_uut.withdraw(151);
+        assertTrue(aux_acc.getBalance()=150); --balance unchanged as it cannot withdraw
+    );
 end atmTest
