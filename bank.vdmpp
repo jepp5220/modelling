@@ -72,6 +72,12 @@ operations
 
     );
 
+    --only really used for testing purposes(?)
+    public addCardToValid: Card ==> () 
+    addCardToValid(cardToAdd) == (
+        validCards := validCards union {cardToAdd};
+    );
+
     --removeCardFromAccount?
 
     

@@ -52,10 +52,36 @@ operations
         cashDispensor := new Dispensor(money);
         return self;
     );
+    --getters/setters
+    --not sure if an issue with having these as public..
+    public getStatus: () ==> Status
+    getStatus() == (return atmStatus;);
+    public getCurrentAcc:() ==> [Account]
+    getCurrentAcc() == (return currentAcc;);
+    public getCurrentCard:() ==> [Card]
+    getCurrentCard() == (return currentCard;);
+    public getStartCapital:() ==> nat
+    getStartCapital()==(return startCapital;);
+    public getBank:()==>Bank
+    getBank() == (return associatedBank;);
+    public getAtmId:()==>nat
+    getAtmId()==(return atmId;);
+
     public setStatus: Status ==> ()
     setStatus(newStatus) == (
         atmStatus := newStatus;
     );
+    --'articially' selects an account. Not sure if usefull yet. 
+    public selectAcc: Account ==> ()
+    selectAcc(acc) == (
+        currentAcc := acc;
+    );
+    public isFree:() ==> bool
+    isFree() ==(
+        return atmOccupancy = <Free>; --if free return true
+    );
+
+    --'proper' functions
     public withdraw: nat1 ==> ()
     withdraw(amount) == (
         if cashDispensor.getAvaliable() < amount then (
@@ -91,15 +117,7 @@ operations
         ); --not sure how better to implement this
     );
 
-    public getStatus: () ==> Status
-    getStatus() == (
-        return atmStatus;
-    );
 
-    public isFree:() ==> bool
-    isFree() ==(
-        return atmOccupancy = <Free>; --if free return true
-    );
 
     --Simulates the insertion of card. If the atm is free, it checks if the card is valid
     public insertCard: Card ==> ()
@@ -126,10 +144,6 @@ operations
         currentAcc := nil;
         atmOccupancy := <Free>;
     );
-        --'articially' selects an account. Not sure if usefull yet. 
-    public selectAcc: Account ==> ()
-    selectAcc(acc) == (
-        currentAcc := acc;
-    );
+
     
 end Atm

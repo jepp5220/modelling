@@ -5,8 +5,8 @@
 			"type": "vdm",
 			"request": "launch",
 			"noDebug": false,
-			"defaultName": "atmTests",
-			"command": "print new atmTests().Run()"
+			"defaultName": "systemTests",
+			"command": "print new systemTests().Run()"
 		},
 		{
 			"name": "Lens config: Launch customerTest`createCustomerTest",

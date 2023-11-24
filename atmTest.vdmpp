@@ -1,0 +1,49 @@
+class atmTest is subclass of TestCase
+instance variables
+    aux_bank : Bank := new Bank(0,"aux_bank_name");
+    aux_acc : Account := new Account(nil,200); 
+
+operations
+    public runTest : () ==> ()
+    runTest() == (
+        createAtmTest();
+        selectAccountTest();
+        insertCardTest();
+    );
+    protected createAtmTest: () ==> ()
+    createAtmTest() == (
+        dcl atm_uut : Atm := new Atm(0,aux_bank,"aux_bank_location",5000); 
+        assertTrue(atm_uut.isFree()); --should be free by default
+        assertTrue(atm_uut.getAtmId() = 0);
+        assertTrue(atm_uut.getBank()=aux_bank);
+        assertTrue(atm_uut.getStartCapital()=5000);
+    ); 
+    protected selectAccountTest:() ==> ()
+    selectAccountTest() == (
+        dcl atm_uut : Atm := new Atm(0,aux_bank,"aux_bank_location",5000); 
+        assertTrue(atm_uut.getCurrentAcc()=nil);
+        atm_uut.selectAcc(aux_acc);
+        assertTrue(atm_uut.getCurrentAcc()=aux_acc);
+        --assertTrue(1=0);
+    );
+    protected insertCardTest:()==>()
+    insertCardTest()==(
+        dcl atm_uut : Atm := new Atm(0,aux_bank,"aux_bank_location",5000); 
+        dcl aux_card : Card := new Card([1,2,3,4],"11th December","Jeppe",[9,9,9,9],aux_acc);
+        assertTrue(atm_uut.isFree()); --free default
+        atm_uut.insertCard(aux_card); --calls validate from bank
+        assertTrue(atm_uut.isFree()); --wont change as card isnt validated.
+    );
+        /*
+    protected ejectCardTest:()==>()
+    ejectCardTest() == ();
+    
+
+
+    protected depositTest:()==>()
+    depositTest() == ();
+    protected withdrawTest:()==>()
+    withdrawTest() == ();
+    protected setStatusTest:()==>()
+    setStatusTest()==();*/
+end atmTest
