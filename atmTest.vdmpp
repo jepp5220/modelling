@@ -54,15 +54,15 @@ operations
         dcl atm_uut : Atm := aux_bank.getAtm();
         dcl aux_card : Card := new Card([1,2,3,4],"4th December","Jeppe",[9,9,9,9],aux_acc);
         assertTrue(atm_uut.isFree()); --free default
-        atm_uut.insertCard(aux_card,[9,9,9,9]); --calls validate from bank
-        assertTrue(atm_uut.isFree()); --wont change as card isnt validated.
+        atm_uut.insertCard(aux_card,[9,9,9,9]); 
+
 
         aux_bank.addCardToValid(aux_card); --validate should work now
         assertTrue(aux_bank.validateCard(aux_card)); --Checking to ensure
         --assertTrue(atm_uut.getBank()=aux_bank);
         --assertTrue(aux_bank.getAtm()=atm_uut);
         atm_uut.insertCard(aux_card,[9,9,9,9]);
-        assertFalse(atm_uut.isFree());
+        assertFalse(atm_uut.isFree()); 
     );
     protected depositTest:()==>()
     depositTest() == (

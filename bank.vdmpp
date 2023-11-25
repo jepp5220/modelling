@@ -5,24 +5,19 @@ class Bank
 instance variables
     private bankId: nat;
     private name: seq of char;
-    private customers: set of Customer;--map nat to Account := {|->}; --create empty mapping from accounts to bankid
+    private customers: set of Customer := {};--map nat to Account := {|->}; --create empty mapping from accounts to bankid
     private atm : Atm; --bank owns atms
-    private validCards : set of Card; --cards associated with this bank
-    private blockedCards : set of Card; --cards r blocked if pin is wrong 3 times
-    private customers1 : map nat to Customer := {|->}; --id to cus?
-    private accounts1 : map Customer to Account := {|->};
-    --private accounts1 : map nat to Account := {|->};
+    private validCards : set of Card := {}; --cards associated with this bank
+    private blockedCards : set of Card := {}; --cards r blocked if pin is wrong 3 times
+    private cusAccMap : map Customer to set of Account := {|->};
+    --Maps customers to their set of accounts
 
-    --list of transactions, mapped to atm. 
 operations
     public Bank: nat * seq of char ==> Bank
     Bank(id,bankName) == (
         bankId := id;
         name := bankName;
-        customers := {};
-        validCards := {};
-        blockedCards := {};
-        atm := new Atm(bankId,self,"Location",5000);
+        atm := new Atm(bankId,self,"Location",5000); --might be a smarter way to do this..
         return self;
     ); 
     public getAtm: () ==> Atm
@@ -39,12 +34,14 @@ operations
     addCustomer(newCustomer) == (
         --precon: customer already exists
         customers := customers union {newCustomer};
+        cusAccMap := cusAccMap ++ {newCustomer |->newCustomer.getAccs()};
     ); 
 
     --Removes a customer from the set of customers in the bank. If customer doesnt exist nothing happens. 
     public removeCustomer: Customer ==> ()
     removeCustomer(removableCustomer) == (
         customers := customers \ {removableCustomer};
+        cusAccMap := {removableCustomer} <-: cusAccMap; --should remove customer
     );
 
     --Given an account, add ownership to a customer. Need to fix for multiple ownerships
@@ -55,23 +52,16 @@ operations
         customer.addAccount(newAcc);
     );
 
+    public customerExists: Customer ==> bool
+    customerExists(cus) ==(
+        return cus in set dom cusAccMap;
+    );
     public removeAccountFromUser: Customer * Account ==> ()
     removeAccountFromUser(cus,acc) == (
         acc.removeOwner();
         cus.removeAccount(acc);
     );
 
-    --opens account and associates with account id
-/* 
-    public openAccount: () ==> nat
-    openAccount() == (
-        dcl newAcc: Account := new Account();
-        dcl accountID: nat := card(accounts1); --cardinality, size of set
-        accounts1 := accounts ++ {accountID |->newAcc};
-        return accountID;
-
-    );
-*/
     public blockCard: Card ==> ()
     blockCard(card_tbb) == (
         blockedCards := blockedCards union {card_tbb};
@@ -91,10 +81,6 @@ operations
     );
 
     --removeCardFromAccount?
-
-    
-
-
     public getAccountsFromCustomer: Customer ==> set of Account
     getAccountsFromCustomer(cus) == (
         return cus.getAccs();

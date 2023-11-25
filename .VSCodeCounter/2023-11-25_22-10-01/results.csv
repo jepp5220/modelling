@@ -1,0 +1,17 @@
+"filename", "language", "VDM++", "comment", "blank", "total"
+"e:\dump\UNI\modelling\account.vdmpp", "VDM++", 44, 4, 1, 49
+"e:\dump\UNI\modelling\accountTest.vdmpp", "VDM++", 63, 4, 5, 72
+"e:\dump\UNI\modelling\atm.vdmpp", "VDM++", 134, 11, 14, 159
+"e:\dump\UNI\modelling\atmTest.vdmpp", "VDM++", 83, 11, 4, 98
+"e:\dump\UNI\modelling\bank.vdmpp", "VDM++", 71, 11, 12, 94
+"e:\dump\UNI\modelling\bankTests.vdmpp", "VDM++", 11, 25, 0, 36
+"e:\dump\UNI\modelling\card.vdmpp", "VDM++", 64, 8, 9, 81
+"e:\dump\UNI\modelling\cardTest.vdmpp", "VDM++", 49, 6, 3, 58
+"e:\dump\UNI\modelling\customer.vdmpp", "VDM++", 33, 2, 4, 39
+"e:\dump\UNI\modelling\customerTest.vdmpp", "VDM++", 36, 7, 2, 45
+"e:\dump\UNI\modelling\display.vdmpp", "VDM++", 22, 5, 0, 27
+"e:\dump\UNI\modelling\lib\IO.vdmpp", "VDM++", 42, 26, 17, 85
+"e:\dump\UNI\modelling\lib\VDMUnit.vdmpp", "VDM++", 337, 121, 118, 576
+"e:\dump\UNI\modelling\systemTests.vdmpp", "VDM++", 16, 0, 0, 16
+"e:\dump\UNI\modelling\transaction.vdmpp", "VDM++", 21, 2, 1, 24
+"Total", "-", 1026, 243, 190, 1459

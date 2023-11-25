@@ -1,24 +1,4 @@
- /*
- class Test1
- values
-    bank : Bank = new Bank(0,"FirstBank");
-    tcard : Card = new Card([1,2,4],"11th December",0);
-    atm_ut : Atm = bank.getAtm(); --= new Atm(0,bank,"Hadsten",9999);
- operations
- public Run: ()==> bool
- Run() == (
-    let peter = new Customer("Jeppe","Granvej",24)
-    in
-        let acc1 = new Account(peter,5000) in (
-            bank.addCustomer(peter);
-            bank.addAccountToUser(peter,acc1);
-            atm_ut.insertCard(tcard);
-            return false;
-        );
- );
- end Test1
-*/
- class systemTests
+class systemTests
  operations
     public Run: () ==> ()
     Run() == (
@@ -31,7 +11,6 @@
             ts.addTest(new bankTest());
             ts.run(TestResult);
             IO`println(TestResult.toString());
-            --IO`println("Test complete:)");
         );
     );
 end systemTests

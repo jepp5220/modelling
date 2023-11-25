@@ -1,4 +1,4 @@
-class customerTest is subclass of TestCase --testacse is a class in vdmunit
+class customerTest is subclass of TestCase --testcase is a class in vdmunit
 operations
     public runTest : () ==> ()
     runTest() == (
