@@ -7,6 +7,7 @@ instance variables
     inv len(cardNumber) = 4;
     private expDate: seq of char;
     private cardOwner: seq of char;
+    private invalidAttempts: nat := 0;
     -- no numbers
     private pinCode: seq of nat; --Should i make it sequence instead?
     inv len(pinCode) = 4;
@@ -40,6 +41,14 @@ operations
     getAcc() == (
         return account;
     );
+
+    public setAttempts:(nat) ==> ()
+    setAttempts(num) == (
+        invalidAttempts:=num;
+        --if invalidAttempts >= 3 then blockCard();
+    );
+    public getAttempts:() ==> nat
+    getAttempts()==(return invalidAttempts;);
 
     --Changes the acc associated with a card
     public setAccount: Account ==> () 

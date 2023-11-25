@@ -127,17 +127,25 @@ operations
 
 
     --Simulates the insertion of card. If the atm is free, it checks if the card is valid
-    public insertCard: Card ==> ()
-    insertCard(insertedCard) == (
+    public insertCard: Card * seq of nat==> ()
+    insertCard(insertedCard,pinattempt) == (
         if isFree()=false
         then IO`println("Machine is occupied. Try again later")
+        else if insertedCard.getAttempts() > 2 then associatedBank.blockCard(insertedCard)
         else if associatedBank.validateCard(insertedCard)
-        then (IO`println("Card recognized.");
+        then IO`println("Card recognized.");
+            if insertedCard.validatePin(pinattempt) then (
                 currentCard := insertedCard;
                 atmOccupancy:= <Occupied>;
+                insertedCard.setAttempts(0); --reset wrong attempts 
                 currentAcc := insertedCard.getAcc();)
-        else IO`println("Card not recognized.");
-    ); 
+            else 
+            IO`println("Wrong pin.");
+            insertedCard.setAttempts(insertedCard.getAttempts()+1);
+        if associatedBank.validateCard(insertedCard) = false then IO`println("Card not recognized.");
+    )
+    pre len(pinattempt) = 4;
+    
 
     --Simulates the ejection of a card, i.e going back to default state of atm.
     public ejectCard: () ==> () 

@@ -1,0 +1,36 @@
+class bankTest is subclass of TestCase
+operations
+    public runTest : () ==> ()
+    runTest() == (
+        createBankTest();
+        --addCustomerTest();
+    );
+    protected createBankTest: () ==> ()
+    createBankTest()==(
+        return;
+    );
+    /*
+    protected addCustomerTest:() ==> ()
+    addCustomerTest()==(
+        dcl bank_uut : Bank := new Bank(1,"banktest");
+        dcl aux_acc : Account := new Account(nil,100);
+        --assertFalse(bank_uut.doesCustomerExist(aux_acc));
+    );
+
+    protected addCustomerTest:() ==> ()
+    addCustomerTest();
+    protected removeCustomerTest:() ==>()
+    removeCustomerTest()==();
+    protected addAccToUserTest:()==>()
+    addAccToUserTest()==();
+    protected rmvAccFromUserTest:()==>()
+    rmvAccFromUserTest() ==();
+    protected addCardToAccTest:()==>()
+    addCardToAccTest()==();
+    protected addCardToValidTest:()==>()
+    addCardToValidTest()==();
+    protected getAccsFromCustomerTest:()==>()
+    getAccsFromCustomerTest()==();
+    protected validateCardTest:()==>()
+    validateCardTest()==(); */
+end bankTest

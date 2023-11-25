@@ -9,8 +9,10 @@ instance variables
     private atm : Atm; --bank owns atms
     private validCards : set of Card; --cards associated with this bank
     private blockedCards : set of Card; --cards r blocked if pin is wrong 3 times
-    private customers1 : map nat to Customer := {|->};
-    private accounts1 : map nat to Account := {|->};
+    private customers1 : map nat to Customer := {|->}; --id to cus?
+    private accounts1 : map Customer to Account := {|->};
+    --private accounts1 : map nat to Account := {|->};
+
     --list of transactions, mapped to atm. 
 operations
     public Bank: nat * seq of char ==> Bank
@@ -27,6 +29,11 @@ operations
     getAtm() == (
         return atm;
     );
+    public doesAccountExist: Customer ==> bool
+    doesAccountExist(cus)==(
+        return cus in set customers;
+    );
+
     --Adds a new customer to the bank(set).
     public addCustomer: Customer ==> ()
     addCustomer(newCustomer) == (
@@ -65,6 +72,11 @@ operations
 
     );
 */
+    public blockCard: Card ==> ()
+    blockCard(card_tbb) == (
+        blockedCards := blockedCards union {card_tbb};
+        IO`println("Card was blocked");
+    );
     --Adds card to account. 
     public addCardToAccount: Account * Card ==> ()
     addCardToAccount(new_acc,new_card) == (
