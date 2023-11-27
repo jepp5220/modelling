@@ -1,6 +1,5 @@
-\section{Credit Card}
-Pincode, Cardnumber, Bank Associated?, experiation date
-\begin{vdm_al}
+--This class models a credit card. Expiration dates been abstracted away, and numbers are kept to 4, for brievty, logic would be similar for 16
+
 class Card
 instance variables
     private cardNumber: seq of nat;
@@ -68,9 +67,4 @@ operations
     validatePin(pinAttempt) == (
         return pinAttempt = pinCode;
     );
-
-    
-
-    --check if expired - need some notion of time, global class perhaps?
 end Card
-\end{vdm_al}

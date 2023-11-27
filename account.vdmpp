@@ -1,29 +1,18 @@
+--This class models an account, owned by a customer(or without owner).
+--Has a non-negative balance, with a list of transactions performed on the account. 
 class Account
 instance variables
     private owner: [Customer]; --optional, to allow for 'removeaccfromuser'. Could be an issue with an acc with lots of money having no owner. 
     private balance: nat;
     inv balance >= 0;
+    private trans_list : seq of Transaction := []; --empty seq. of transactons
 operations
     public Account: [Customer] * nat ==> Account
     Account(customer,initial_balance) ==(
         owner := customer;
         balance := initial_balance;
     );
-
-    public addMoney: nat1 ==> ()
-    addMoney(amount) == (
-        --cant add negative or 0 value
-        balance := balance + amount;
-    );
-    public withdrawMoney: nat1 ==> bool --returns success of operation
-    withdrawMoney(amount) ==(
-        --cant withdraw 0/negative values
-        if (balance - amount >= 0) then (
-            balance := balance - amount;
-            return true;
-        )
-        else (return false;)
-    );
+    --Getters/Setters:
     public getBalance: () ==> nat
     getBalance() == (
         return balance;
@@ -32,8 +21,11 @@ operations
     getOwner() == (
         return owner;
     );
+    public getTransactions: () ==> seq of Transaction
+    getTransactions() == (
+        return trans_list;
+    );
     --force changes owner. not sure this is best practice. 
-    --Will probably be better w multiple owners allowed. 
     public setOwner: Customer ==> ()
     setOwner(newOwner) == (
         owner := newOwner;
@@ -45,5 +37,36 @@ operations
     public removeOwner: () ==> ()
     removeOwner() == (
         owner := nil;
+    );
+
+    --Function called by bank when a trasaction has been permitted. 
+    public addMoney: nat1 ==> ()
+    addMoney(amount) == (
+        balance := balance + amount;
+        createTransaction(<Deposit>,amount);
+    );
+    
+    --Creates a transaction of either Deposit or Withdrawal typed depending on which is apt. 
+    --This transaction is then appended to the list of actions performed on the given account
+    public createTransaction:Transaction`Type * real ==> ()
+    createTransaction(type,val)==(
+        --creates a transaction, id is the number this transaction is in the list
+        dcl trans : Transaction := new Transaction(val,type,len(trans_list));
+        trans_list := trans_list ^ [trans];
+    )
+    pre val > 0 and (type = <Withdrawal> or type = <Deposit>)
+    post len trans_list > 0;
+
+    --This function withdraws money, returning a boolean indicating success of operation
+    --The logic ensuring no overdraft is also implemented in banking, where the function would be called
+    --but redundancy never hurt anyone..
+    public withdrawMoney: nat1 ==> bool   --cant withdraw 0/negative values
+    withdrawMoney(amount) ==(
+        if (balance - amount >= 0) then (
+            balance := balance - amount;
+            createTransaction(<Withdrawal>,amount);
+            return true;
+        )
+        else (return false;)
     );
 end Account

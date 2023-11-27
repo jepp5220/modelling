@@ -11,6 +11,7 @@ operations
       getOwnerTest();
       setOwnerTest();
       removeOwnerTest();
+      ensureTransactionsCreatedTest();
     );
     protected createAccountTest:() ==> ()
     createAccountTest() == (
@@ -67,6 +68,14 @@ operations
       acc_uut.setMoney(999);
       assertTrue(acc_uut.getBalance() = 999);
       --assertTrue(1=0)
+    );
+    protected ensureTransactionsCreatedTest: () ==>()
+    ensureTransactionsCreatedTest()==(
+      dcl acc_uut : Account := new Account(cust,100);
+      assertTrue(acc_uut.withdrawMoney(5)); --successfully withdraw money
+      assertTrue(len(acc_uut.getTransactions())=1);
+      assertTrue((hd acc_uut.getTransactions()).getAmount() = 5);
+      assertTrue((hd acc_uut.getTransactions()).getType() = <Withdrawal>);
     );
 
 end accountTest 

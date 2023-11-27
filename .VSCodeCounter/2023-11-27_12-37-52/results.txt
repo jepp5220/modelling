@@ -1,0 +1,41 @@
+Date : 2023-11-27 12:37:52
+Directory : e:\dump\UNI\modelling
+Total : 15 files,  1129 codes, 226 comments, 192 blanks, all 1547 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| VDM++    |         15 |      1,129 |        226 |        192 |      1,547 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------+------------+------------+------------+------------+------------+
+| path                                        | files      | code       | comment    | blank      | total      |
++---------------------------------------------+------------+------------+------------+------------+------------+
+| .                                           |         15 |      1,129 |        226 |        192 |      1,547 |
+| . (Files)                                   |         13 |        750 |         79 |         57 |        886 |
+| lib                                         |          2 |        379 |        147 |        135 |        661 |
++---------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                    | language | code       | comment    | blank      | total      |
++---------------------------------------------+----------+------------+------------+------------+------------+
+| e:\dump\UNI\modelling\account.vdmpp         | VDM++    |         54 |          6 |          7 |         67 |
+| e:\dump\UNI\modelling\accountTest.vdmpp     | VDM++    |         63 |          4 |          5 |         72 |
+| e:\dump\UNI\modelling\atm.vdmpp             | VDM++    |        134 |         11 |         12 |        157 |
+| e:\dump\UNI\modelling\atmTest.vdmpp         | VDM++    |         83 |         11 |          4 |         98 |
+| e:\dump\UNI\modelling\bank.vdmpp            | VDM++    |         83 |         13 |          9 |        105 |
+| e:\dump\UNI\modelling\bankTests.vdmpp       | VDM++    |         99 |         10 |          1 |        110 |
+| e:\dump\UNI\modelling\card.vdmpp            | VDM++    |         59 |          8 |          9 |         76 |
+| e:\dump\UNI\modelling\cardTest.vdmpp        | VDM++    |         48 |          6 |          3 |         57 |
+| e:\dump\UNI\modelling\customer.vdmpp        | VDM++    |         33 |          2 |          4 |         39 |
+| e:\dump\UNI\modelling\customerTest.vdmpp    | VDM++    |         36 |          7 |          2 |         45 |
+| e:\dump\UNI\modelling\lib\IO.vdmpp          | VDM++    |         42 |         26 |         17 |         85 |
+| e:\dump\UNI\modelling\lib\VDMUnit.vdmpp     | VDM++    |        337 |        121 |        118 |        576 |
+| e:\dump\UNI\modelling\systemTests.vdmpp     | VDM++    |         17 |          0 |          0 |         17 |
+| e:\dump\UNI\modelling\transaction.vdmpp     | VDM++    |         27 |          1 |          1 |         29 |
+| e:\dump\UNI\modelling\transactionTest.vdmpp | VDM++    |         14 |          0 |          0 |         14 |
+| Total                                       |          |      1,129 |        226 |        192 |      1,547 |
++---------------------------------------------+----------+------------+------------+------------+------------+

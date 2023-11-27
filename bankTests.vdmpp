@@ -106,12 +106,5 @@ operations
         --
         bank_uut.addCardToValid(aux_card);
         assertTrue(bank_uut.validateCard(aux_card));
-
-
     ); 
-    
-
-
-
-
 end bankTest
