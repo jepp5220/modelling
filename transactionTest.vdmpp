@@ -1,0 +1,14 @@
+class transactionTest is subclass of TestCase --testcase is a class in vdmunit
+operations
+    public runTest : () ==> ()
+    runTest() == (
+        createTransTest();
+    );
+    protected createTransTest: () ==> ()
+    createTransTest()==(
+        dcl trans_uut : Transaction := new Transaction(200,<Deposit>,1);
+        assertTrue(trans_uut.getId()=1);
+        assertTrue(trans_uut.getType()=<Deposit>);
+        assertTrue(trans_uut.getAmount()=200);
+    );
+end transactionTest

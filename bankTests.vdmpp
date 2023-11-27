@@ -3,34 +3,115 @@ operations
     public runTest : () ==> ()
     runTest() == (
         createBankTest();
-        --addCustomerTest();
+        addCustomerTest();
+        removeCustomerTest();
+        addAccToUserTest();
+        rmvAccFromUserTest();
+        addCardToAccTest();
+        addCardToValidTest();
+        getAccsFromCustomerTest();
+        validateCardTest();
     );
     protected createBankTest: () ==> ()
     createBankTest()==(
-        return;
+        dcl bank_uut : Bank := new Bank(1,"banktest");
+        assertTrue(bank_uut.getName()="banktest");
+        assertTrue(bank_uut.getId()=1);
+        assertTrue(bank_uut.getValidCards()={});
+        assertTrue(bank_uut.getBlockedCards()={});
+        assertTrue((card dom bank_uut.getCusAccMap())=0); --no values in domain
     );
-    /*
+    
     protected addCustomerTest:() ==> ()
     addCustomerTest()==(
         dcl bank_uut : Bank := new Bank(1,"banktest");
-        dcl aux_acc : Account := new Account(nil,100);
-        --assertFalse(bank_uut.doesCustomerExist(aux_acc));
+        --dcl aux_acc : Account := new Account(nil,100);
+        dcl aux_cus : Customer := new Customer("Jeppe","Skovvej",21);
+        assertFalse(bank_uut.doesCustomerExist(aux_cus));
+        bank_uut.addCustomer(aux_cus);
+        assertTrue(bank_uut.doesCustomerExist(aux_cus));
     );
-
-    protected addCustomerTest:() ==> ()
-    addCustomerTest();
     protected removeCustomerTest:() ==>()
-    removeCustomerTest()==();
+    removeCustomerTest()==(
+        dcl bank_uut : Bank := new Bank(1,"banktest");
+        dcl aux_cus : Customer := new Customer("Jeppe","Skovvej",21);
+        bank_uut.addCustomer(aux_cus); 
+        assertTrue(bank_uut.doesCustomerExist(aux_cus));
+        --removing user
+        bank_uut.removeCustomer(aux_cus);
+        assertFalse(bank_uut.doesCustomerExist(aux_cus));
+    );
     protected addAccToUserTest:()==>()
-    addAccToUserTest()==();
+    addAccToUserTest()==(
+        dcl bank_uut : Bank := new Bank(1,"banktest");
+        dcl aux_cus : Customer := new Customer("Jeppe","Skovvej",21);
+        dcl aux_acc : Account := new Account(aux_cus,100);
+        assertTrue(aux_cus.getAccs()={});
+        --
+        bank_uut.addAccountToUser(aux_cus,aux_acc);
+        assertFalse(aux_cus.getAccs()={});
+    );
     protected rmvAccFromUserTest:()==>()
-    rmvAccFromUserTest() ==();
+    rmvAccFromUserTest() ==(
+        dcl bank_uut : Bank := new Bank(1,"banktest");
+        dcl aux_cus : Customer := new Customer("Jeppe","Skovvej",21);
+        dcl aux_acc : Account := new Account(aux_cus,100);
+        bank_uut.addAccountToUser(aux_cus,aux_acc);
+        assertTrue(aux_cus.getAccs()={aux_acc});
+        -- Should successfully remove account as it's in his list
+        assertTrue(bank_uut.removeAccountFromUser(aux_cus, aux_acc));
+        --running it again should result in false as the account should no longer be in his possesion
+        assertFalse(bank_uut.removeAccountFromUser(aux_cus, aux_acc));
+    );
     protected addCardToAccTest:()==>()
-    addCardToAccTest()==();
+    addCardToAccTest()==(
+        dcl bank_uut : Bank := new Bank(1,"banktest");
+        dcl aux_cus : Customer := new Customer("Jeppe","Skovvej",21);
+        dcl aux_acc : Account := new Account(aux_cus,100);
+        dcl aux_acc2 : Account := new Account(nil,1000);
+        dcl aux_card : Card := new Card([1,2,3,4],"Jeppe",[9,9,9,9],aux_acc);
+        assertTrue(aux_card.getAcc() = aux_acc);
+        --
+        bank_uut.addCardToAccount(aux_acc2, aux_card);
+        assertFalse(aux_card.getAcc() = aux_acc);
+        assertTrue(aux_card.getAcc() = aux_acc2);
+    );
     protected addCardToValidTest:()==>()
-    addCardToValidTest()==();
+    addCardToValidTest()==(
+        dcl bank_uut : Bank := new Bank(1,"banktest");
+        dcl aux_cus : Customer := new Customer("Jeppe","Skovvej",21);
+        dcl aux_acc : Account := new Account(aux_cus,100);
+        dcl aux_card : Card := new Card([1,2,3,4],"Jeppe",[9,9,9,9],aux_acc);
+        assertFalse(bank_uut.validateCard(aux_card));
+        --
+        bank_uut.addCardToValid(aux_card);
+        assertTrue(bank_uut.validateCard(aux_card));
+    );
     protected getAccsFromCustomerTest:()==>()
-    getAccsFromCustomerTest()==();
+    getAccsFromCustomerTest()==(
+        dcl bank_uut : Bank := new Bank(1,"banktest");
+        dcl aux_cus : Customer := new Customer("Jeppe","Skovvej",21);
+        dcl aux_acc : Account := new Account(aux_cus,100);
+        assertTrue(bank_uut.getAccountsFromCustomer(aux_cus)={}); --initially no accs connected
+        bank_uut.addAccountToUser(aux_cus, aux_acc);
+        assertFalse(bank_uut.getAccountsFromCustomer(aux_cus)={});
+        --When passing a customer in acc creation, that account should be connected to the customer..needs fix.
+    );
     protected validateCardTest:()==>()
-    validateCardTest()==(); */
+    validateCardTest()==(
+        dcl bank_uut : Bank := new Bank(1,"banktest");
+        --we know the list of cards is empty at creation from CreateBankTest()
+        dcl aux_card : Card := new Card([1,2,3,4],[9,9,9,9]); --creating card with no owner
+        assertFalse(bank_uut.validateCard(aux_card)); --shouldnt be validated
+        --
+        bank_uut.addCardToValid(aux_card);
+        assertTrue(bank_uut.validateCard(aux_card));
+
+
+    ); 
+    
+
+
+
+
 end bankTest

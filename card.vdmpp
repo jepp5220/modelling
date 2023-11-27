@@ -5,7 +5,6 @@ class Card
 instance variables
     private cardNumber: seq of nat;
     inv len(cardNumber) = 4;
-    private expDate: seq of char;
     private cardOwner: seq of char;
     private invalidAttempts: nat := 0;
     -- no numbers
@@ -15,20 +14,18 @@ instance variables
     
 operations
     --Default Constructor, provided all details
-    public Card: seq of nat * seq of char * seq of char * seq of nat * Account==> Card
-    Card(num,date,owner,pin,acc) == (
+    public Card: seq of nat  * seq of char * seq of nat * Account==> Card
+    Card(num,owner,pin,acc) == (
         cardNumber := num;
-        expDate := date;
         cardOwner := owner;
         pinCode := pin;
         account := acc;
         return self;
     );
     --Second constructor, creating a card not associated with a user yet.
-    public Card: seq of nat * seq of char * seq of nat==> Card
-    Card(num,date,pin) == (
+    public Card: seq of nat * seq of nat==> Card
+    Card(num,pin) == (
         cardNumber := num;
-        expDate := date;
         pinCode := pin;
         return self;
     );
@@ -55,8 +52,6 @@ operations
     setAccount(acc) ==(
         account := acc;
     );
-    public getExpDate: () ==> seq of char
-    getExpDate()==(return expDate);
 
     public getCardOwner: () ==> seq of char
     getCardOwner()==(return cardOwner);

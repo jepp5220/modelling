@@ -14,24 +14,23 @@ operations
     );
     protected createCardTest: () ==> ()
     createCardTest() ==(
-        dcl card_uut : Card := new Card([1,2,3,4],"11th December","Jeppe",[9,9,9,9],aux_acc);
+        dcl card_uut : Card := new Card([1,2,3,4],"Jeppe",[9,9,9,9],aux_acc);
         assertTrue(card_uut.getCardNumber() = [1,2,3,4]);
         assertTrue(card_uut.getAcc() = aux_acc);
         assertTrue(card_uut.getCardOwner()="Jeppe");
-        assertTrue(card_uut.getExpDate()="11th December");
         --assertTrue(1=0);
     );
     
     --Tests the invariants, will add breakpoint in debugging so only run once to test
     protected cardInvTests : () ==> ()
     cardInvTests() == (
-        dcl card_uut : Card := new Card([1,2,3,4,8,9,0],"11th December","Jeppe",[9,9,9,9,9,9],aux_acc);
+        dcl card_uut : Card := new Card([1,2,3,4,8,9,0],"Jeppe",[9,9,9,9,9,9],aux_acc);
         assertTrue(card_uut.getCardOwner()="Jeppe");
     ); 
 
     protected setPinTest: () ==> ()
     setPinTest() == (
-        dcl card_uut : Card := new Card([1,2,3,4],"11th December","Jeppe",[9,9,9,9],aux_acc);
+        dcl card_uut : Card := new Card([1,2,3,4],"Jeppe",[9,9,9,9],aux_acc);
         assertTrue(card_uut.getPinCode()=[9,9,9,9]);
         card_uut.setPinCode([0,2,4,6]);
         assertFalse(card_uut.getPinCode()=[9,9,9,9]);
@@ -39,7 +38,7 @@ operations
     );
     protected setAccountTest:()==>()
     setAccountTest() == (
-        dcl card_uut : Card := new Card([1,2,3,4],"11th December","Jeppe",[9,9,9,9],aux_acc);
+        dcl card_uut : Card := new Card([1,2,3,4],"Jeppe",[9,9,9,9],aux_acc);
         dcl new_acc : Account := new Account(nil,200); --utilizing the fact that owner:Customer is optional type
         assertTrue(card_uut.getAcc()=aux_acc);
         assertTrue(1=1);
@@ -51,7 +50,7 @@ operations
     );
     protected validatePinTest: () ==> ()
     validatePinTest() == (
-        dcl card_uut : Card := new Card([1,2,3,4],"11th December","Jeppe",[9,9,9,9],aux_acc);
+        dcl card_uut : Card := new Card([1,2,3,4],"Jeppe",[9,9,9,9],aux_acc);
         assertFalse(card_uut.validatePin([5,6,7,8]));
         assertTrue(card_uut.validatePin([9,9,9,9]));
     );

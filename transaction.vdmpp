@@ -1,17 +1,21 @@
 class Transaction
 types
-    public Type = <Deposit> | <Withdrawal> | <Statement>;
+    public Type = <Deposit> | <Withdrawal>;
 instance variables
     public amount: real;
     public type : Type; 
-    --date?
-    --id?
+    public id : nat; --Id will be the cardinality of transactions in a class, e.g 2 classes can both have transactions with id 1
+    --note : seq of char?
 operations
-    public Transaction: real * Type ==> Transaction
-    Transaction(val,t_type) == (
+    public Transaction: real * Type * nat ==> Transaction
+    Transaction(val,t_type,i) == (
         amount := val;
         type := t_type;
-    );
+        id := i;
+    )
+    pre val > 0
+    post type = <Deposit> or type = <Withdrawal>;
+
     public getAmount: () ==> nat1
     getAmount() == (
         return amount;
@@ -20,5 +24,6 @@ operations
     getType() == (
         return type;
     );
-    
+    public getId: () ==> nat
+    getId() == (return id;);
 end Transaction

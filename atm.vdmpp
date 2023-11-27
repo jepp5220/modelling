@@ -98,8 +98,6 @@ operations
                 IO`print("Balance is now:");
                 IO`println(currentAcc.getBalance());
                 )
-
-                
                 else (
                     IO`println("Uknown error withdrawing.");
                 );

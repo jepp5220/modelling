@@ -24,10 +24,22 @@ operations
     getAtm() == (
         return atm;
     );
+    public getId: () ==> nat
+    getId() == (return bankId;);
+    public getName: () ==> seq of char 
+    getName() == (return name);
+    public getValidCards:() ==> set of Card
+    getValidCards()==(return validCards;);
+    public getBlockedCards:() ==> set of Card
+    getBlockedCards() == (return blockedCards);
+    public getCusAccMap:() ==> map Customer to set of Account
+    getCusAccMap() == (return cusAccMap);
+
+    /*
     public doesAccountExist: Customer ==> bool
     doesAccountExist(cus)==(
         return cus in set customers;
-    );
+    ); */
 
     --Adds a new customer to the bank(set).
     public addCustomer: Customer ==> ()
@@ -45,23 +57,30 @@ operations
     );
 
     --Given an account, add ownership to a customer. Need to fix for multiple ownerships
-    
     public addAccountToUser: Customer * Account ==> () 
     addAccountToUser(customer,newAcc) ==(
         newAcc.setOwner(customer);
         customer.addAccount(newAcc);
+        cusAccMap := cusAccMap ++ {customer |->customer.getAccs()};
     );
 
-    public customerExists: Customer ==> bool
-    customerExists(cus) ==(
+    public doesCustomerExist: Customer ==> bool
+    doesCustomerExist(cus) ==(
         return cus in set dom cusAccMap;
     );
-    public removeAccountFromUser: Customer * Account ==> ()
-    removeAccountFromUser(cus,acc) == (
-        acc.removeOwner();
-        cus.removeAccount(acc);
-    );
 
+    --returns boolean based on success of operation
+    public removeAccountFromUser: Customer * Account ==> bool
+    removeAccountFromUser(cus,acc) == (
+        if acc in set cus.getAccs() then (
+            acc.removeOwner();
+            cus.removeAccount(acc);
+            --update map
+            cusAccMap := cusAccMap ++ {cus |->cus.getAccs()};
+            return true;
+        ) 
+        else return false;
+    );
     public blockCard: Card ==> ()
     blockCard(card_tbb) == (
         blockedCards := blockedCards union {card_tbb};

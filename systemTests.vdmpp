@@ -9,6 +9,7 @@ class systemTests
             ts.addTest(new cardTest());
             ts.addTest(new atmTest());
             ts.addTest(new bankTest());
+            ts.addTest(new transactionTest());
             ts.run(TestResult);
             IO`println(TestResult.toString());
         );

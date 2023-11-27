@@ -52,7 +52,7 @@ operations
     insertCardTest()==(
         --dcl atm_uut : Atm := new Atm(0,aux_bank,"aux_bank_location",5000); 
         dcl atm_uut : Atm := aux_bank.getAtm();
-        dcl aux_card : Card := new Card([1,2,3,4],"4th December","Jeppe",[9,9,9,9],aux_acc);
+        dcl aux_card : Card := new Card([1,2,3,4],"Jeppe",[9,9,9,9],aux_acc);
         assertTrue(atm_uut.isFree()); --free default
         atm_uut.insertCard(aux_card,[9,9,9,9]); 
 
@@ -68,7 +68,7 @@ operations
     depositTest() == (
         --neccessary components to test.
         dcl atm_uut : Atm := aux_bank.getAtm();
-        dcl aux_card : Card := new Card([1,2,3,4],"11th December","Jeppe",[9,9,9,9],aux_acc);
+        dcl aux_card : Card := new Card([1,2,3,4],"Jeppe",[9,9,9,9],aux_acc);
         dcl initBal : nat := aux_acc.getBalance();
         aux_bank.addCardToValid(aux_card); --card recognized now
         atm_uut.insertCard(aux_card,[9,9,9,9]);
@@ -81,7 +81,7 @@ operations
     withdrawTest() == (
         --neccessary components to test.
         dcl atm_uut : Atm := aux_bank.getAtm();
-        dcl aux_card : Card := new Card([1,2,3,4],"11th December","Jeppe",[9,9,9,9],aux_acc);
+        dcl aux_card : Card := new Card([1,2,3,4],"Jeppe",[9,9,9,9],aux_acc);
         dcl initBal : nat := aux_acc.getBalance();
         aux_bank.addCardToValid(aux_card); --card recognized now
         atm_uut.insertCard(aux_card,[9,9,9,9]);
