@@ -1,6 +1,14 @@
---Dispensor models the physical part of the atm that has the money. It has no proper logic, if it's told to provide money, it does.
---the transactions are verified/allowed prior to dispensor calls.
-class Dispensor 
+\documentclass[a4paper]{article}
+\usepackage{longtable}
+\usepackage[color]{vdmlisting}
+\usepackage{fullpage}
+\usepackage{hyperref}
+\begin{document}
+\title{}
+\author{}
+\begin{vdm_al}
+
+class Dispensor -- the actual till. Make it part of atm?
 instance variables
     private avaliableFunds: nat;
 operations
@@ -25,22 +33,21 @@ operations
         avaliableFunds := avaliableFunds - amount;
     );
 end Dispensor
---The physical atm, that interacts with the customer. Can only handle 1 customer at a given time. 
+
 class Atm
 types
     public Status = <Online> | <Offline>;
-    public Occupancy = <Occupied> | <Free> ;
+    public Occupancy = <Occupied> | <Free>;
 instance variables
     private atmId: nat;
     private location: seq of char;
     private atmStatus: Status;
     private atmOccupancy: Occupancy;
     private startCapital: nat;
-    private cashDispensor: Dispensor; --Associated dispensor
+    private cashDispensor: Dispensor;
     private associatedBank: Bank;
-    private currentCard: [Card]; --optional type, as it can be empty/free
+    private currentCard: [Card]; --optional type
     private currentAcc: [Account];
-    --inv if Status = <Offline> then Occupancy = <Occupied>;
 operations
     public Atm: nat * Bank * seq of char * nat==> Atm
     Atm(id,aBank,loc,money) == (
@@ -56,6 +63,7 @@ operations
         return self;
     );
     --getters/setters
+    --not sure if an issue with having these as public..
     public getStatus: () ==> Status
     getStatus() == (return atmStatus;);
     public getCurrentAcc:() ==> [Account]
@@ -77,7 +85,8 @@ operations
     public selectAcc: Account ==> ()
     selectAcc(acc) == (
         currentAcc := acc;
-        --Could also return associated card.
+        --get card associated w?
+
     );
     public isFree:() ==> bool
     isFree() ==(
@@ -85,11 +94,9 @@ operations
     );
 
     --'proper' functions
-    --If the machine is free/online and a card is inserted/validated, this function
-    --allows for the withdrawal of a positive value. 
     public withdraw: nat1 ==> ()
     withdraw(amount) == (
-        if currentAcc = nil or currentCard = nil then return;
+        if currentAcc = nil then return;
         if cashDispensor.getAvaliable() < amount then (
             IO`println("Machine cannot fullfill this request.");
             return;
@@ -109,12 +116,13 @@ operations
         ) 
         else ( --user cannot afford
             IO`println("Balance too low. Try withdrawing a smaller number.")
-        );  
-    )
-    pre atmStatus <> <Offline>;
+        );
+        --pre machine is occupied, card and acc is not null
+    );
 
     public deposit: nat1 ==> ()
     deposit(amount) == (
+        --if (currentAcc = nil) then return;
         dcl initial_balance : nat := currentAcc.getBalance();
         cashDispensor.addMoney(amount);
         currentAcc.addMoney(amount);
@@ -123,7 +131,7 @@ operations
             IO`println("An error has occured. The bank has been notified, please hold.")
         ); --not sure how better to implement this
     )
-    pre currentAcc <> nil and atmStatus = <Online>;
+    pre currentAcc <> nil;
 
 
 
@@ -155,3 +163,57 @@ operations
         atmOccupancy := <Free>;
     );    
 end Atm
+\end{vdm_al}
+\bigskip
+\begin{longtable}{|l|r|r|}
+\hline
+Function or operation & Coverage & Calls \\
+\hline
+\hline
+Atm & 94.1\% & 16 \\
+\hline
+Atm & 100.0\% & 16 \\
+\hline
+Dispensor & 100.0\% & 16 \\
+\hline
+Dispensor & 85.7\% & 16 \\
+\hline
+addMoney & 100.0\% & 2 \\
+\hline
+deposit & 87.5\% & 4 \\
+\hline
+ejectCard & 100.0\% & 2 \\
+\hline
+getAtmId & 100.0\% & 1 \\
+\hline
+getAvaliable & 100.0\% & 5 \\
+\hline
+getBank & 100.0\% & 1 \\
+\hline
+getCurrentAcc & 100.0\% & 4 \\
+\hline
+getCurrentCard & 0.0\% & 0 \\
+\hline
+getStartCapital & 100.0\% & 1 \\
+\hline
+getStatus & 100.0\% & 2 \\
+\hline
+insertCard & 100.0\% & 13 \\
+\hline
+isFree & 100.0\% & 19 \\
+\hline
+removeMoney & 100.0\% & 4 \\
+\hline
+selectAcc & 100.0\% & 2 \\
+\hline
+setMoney & 0.0\% & 0 \\
+\hline
+setStatus & 100.0\% & 1 \\
+\hline
+withdraw & 86.8\% & 7 \\
+\hline
+\hline
+atm.vdmpp & 93.4\% & 132 \\
+\hline
+\end{longtable}
+\end{document}

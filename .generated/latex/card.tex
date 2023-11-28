@@ -1,0 +1,115 @@
+\documentclass[a4paper]{article}
+\usepackage{longtable}
+\usepackage[color]{vdmlisting}
+\usepackage{fullpage}
+\usepackage{hyperref}
+\begin{document}
+\title{}
+\author{}
+\begin{vdm_al}
+--This class models a credit card. Expiration dates been abstracted away, and numbers are kept to 4, for brievty, logic would be similar for 16
+
+class Card
+instance variables
+    private cardNumber: seq of nat;
+    inv len(cardNumber) = 4;
+    private cardOwner: seq of char;
+    private invalidAttempts: nat := 0;
+    -- no numbers
+    private pinCode: seq of nat; --Should i make it sequence instead?
+    inv len(pinCode) = 4;
+    private account: Account; --Only 1 account per card ? 
+    
+operations
+    --Default Constructor, provided all details
+    public Card: seq of nat  * seq of char * seq of nat * Account==> Card
+    Card(num,owner,pin,acc) == (
+        cardNumber := num;
+        cardOwner := owner;
+        pinCode := pin;
+        account := acc;
+        return self;
+    );
+    --Second constructor, creating a card not associated with a user yet.
+    public Card: seq of nat * seq of nat==> Card
+    Card(num,pin) == (
+        cardNumber := num;
+        pinCode := pin;
+        return self;
+    );
+    --Getters/Setters
+    --getcnumber, get owner, get exp date
+    public getCardNumber: () ==> seq of nat
+    getCardNumber()==(return cardNumber);
+    
+    public getAcc:() ==> Account
+    getAcc() == (
+        return account;
+    );
+
+    public setAttempts:(nat) ==> ()
+    setAttempts(num) == (
+        invalidAttempts:=num;
+        --if invalidAttempts >= 3 then blockCard();
+    );
+    public getAttempts:() ==> nat
+    getAttempts()==(return invalidAttempts;);
+
+    --Changes the acc associated with a card
+    public setAccount: Account ==> () 
+    setAccount(acc) ==(
+        account := acc;
+    );
+
+    public getCardOwner: () ==> seq of char
+    getCardOwner()==(return cardOwner);
+
+    public setPinCode: seq of nat ==> ()
+    setPinCode(newPin)==(
+        pinCode := newPin;
+    );
+    public getPinCode: () ==> seq of nat 
+    getPinCode() == (
+        return pinCode;
+    );
+    public validatePin: seq of nat ==> bool
+    validatePin(pinAttempt) == (
+        return pinAttempt = pinCode;
+    );
+end Card
+\end{vdm_al}
+\bigskip
+\begin{longtable}{|l|r|r|}
+\hline
+Function or operation & Coverage & Calls \\
+\hline
+\hline
+Card & 100.0\% & 12 \\
+\hline
+Card & 100.0\% & 14 \\
+\hline
+Card:25 & 100.0\% & 1 \\
+\hline
+getAcc & 100.0\% & 16 \\
+\hline
+getAttempts & 100.0\% & 22 \\
+\hline
+getCardNumber & 100.0\% & 1 \\
+\hline
+getCardOwner & 100.0\% & 1 \\
+\hline
+getPinCode & 100.0\% & 3 \\
+\hline
+setAccount & 100.0\% & 2 \\
+\hline
+setAttempts & 100.0\% & 21 \\
+\hline
+setPinCode & 100.0\% & 1 \\
+\hline
+validatePin & 100.0\% & 15 \\
+\hline
+\hline
+card.vdmpp & 100.0\% & 109 \\
+\hline
+\end{longtable}
+\end{document}

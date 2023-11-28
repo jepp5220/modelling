@@ -1,0 +1,138 @@
+\documentclass[a4paper]{article}
+\usepackage{longtable}
+\usepackage[color]{vdmlisting}
+\usepackage{fullpage}
+\usepackage{hyperref}
+\begin{document}
+\title{}
+\author{}
+\begin{vdm_al}
+
+class atmTest is subclass of TestCase
+instance variables
+    aux_bank : Bank := new Bank(0,"aux_bank_name");
+    aux_acc : Account := new Account(nil,200); 
+
+operations
+    public runTest : () ==> ()
+    runTest() == (
+        createAtmTest();
+        selectAccountTest();
+        setStatusTest();
+        insertCardTest();
+        ejectCardTest();
+        depositTest();
+        withdrawTest();
+    );
+    protected createAtmTest: () ==> ()
+    createAtmTest() == (
+        dcl atm_uut : Atm := new Atm(0,aux_bank,"aux_bank_location",5000); 
+        assertTrue(atm_uut.isFree()); --should be free by default
+        assertTrue(atm_uut.getAtmId() = 0);
+        assertTrue(atm_uut.getBank()=aux_bank);
+        assertTrue(atm_uut.getStartCapital()=5000);
+    ); 
+    protected selectAccountTest:() ==> ()
+    selectAccountTest() == (
+        dcl atm_uut : Atm := new Atm(0,aux_bank,"aux_bank_location",5000); 
+        assertTrue(atm_uut.getCurrentAcc()=nil);
+        atm_uut.selectAcc(aux_acc);
+        assertTrue(atm_uut.getCurrentAcc()=aux_acc);
+        --assertTrue(1=0);
+    );
+    protected ejectCardTest:()==>()
+    ejectCardTest() == (
+        dcl atm_uut : Atm := new Atm(0,aux_bank,"aux_bank_location",5000); 
+        atm_uut.selectAcc(aux_acc);
+        assertTrue(atm_uut.getCurrentAcc()= aux_acc);
+        atm_uut.ejectCard();
+        assertTrue(atm_uut.getCurrentAcc() = nil);
+        assertTrue(atm_uut.isFree());
+    );
+
+    protected setStatusTest:()==>()
+    setStatusTest()==(
+        dcl atm_uut : Atm := aux_bank.getAtm();
+        assertTrue(atm_uut.getStatus()=<Online>);
+        atm_uut.setStatus(<Offline>);
+        assertTrue(atm_uut.getStatus()=<Offline>);
+    );
+    --atm_uut not connected to bank, issue! 
+    protected insertCardTest:()==>()
+    insertCardTest()==(
+        --dcl atm_uut : Atm := new Atm(0,aux_bank,"aux_bank_location",5000); 
+        dcl atm_uut : Atm := aux_bank.getAtm();
+        dcl aux_card : Card := new Card([1,2,3,4],"Jeppe",[9,9,9,9],aux_acc);
+        assertTrue(atm_uut.isFree()); --free default
+        atm_uut.insertCard(aux_card,[9,9,9,9]); 
+
+
+        aux_bank.addCardToValid(aux_card); --validate should work now
+        assertTrue(aux_bank.validateCard(aux_card)); --Checking to ensure
+        --assertTrue(atm_uut.getBank()=aux_bank);
+        --assertTrue(aux_bank.getAtm()=atm_uut);
+        atm_uut.insertCard(aux_card,[9,9,9,9]);
+        assertFalse(atm_uut.isFree()); 
+    );
+    protected depositTest:()==>()
+    depositTest() == (
+        --neccessary components to test.
+        dcl atm_uut : Atm := aux_bank.getAtm();
+        dcl aux_card : Card := new Card([1,2,3,4],"Jeppe",[9,9,9,9],aux_acc);
+        dcl initBal : nat := aux_acc.getBalance();
+        aux_bank.addCardToValid(aux_card); --card recognized now
+        atm_uut.insertCard(aux_card,[9,9,9,9]);
+        assertFalse(atm_uut.isFree());
+        --testing deposit
+        atm_uut.deposit(50);
+        assertTrue(aux_acc.getBalance()=initBal+50);
+    );
+    protected withdrawTest:()==>()
+    withdrawTest() == (
+        --neccessary components to test.
+        dcl atm_uut : Atm := aux_bank.getAtm();
+        dcl aux_card : Card := new Card([1,2,3,4],"Jeppe",[9,9,9,9],aux_acc);
+        dcl initBal : nat := aux_acc.getBalance();
+        aux_bank.addCardToValid(aux_card); --card recognized now
+        atm_uut.insertCard(aux_card,[9,9,9,9]);
+        assertFalse(atm_uut.isFree());
+        --testing withdraw
+        atm_uut.withdraw(50);
+        assertTrue(aux_acc.getBalance()=initBal-50);
+        --set balance, so other (deposit) tests doesnt interfere with balance
+        aux_acc.setMoney(150);
+        --balance is now 150, attempting to withdraw more
+        atm_uut.withdraw(151);
+        assertTrue(aux_acc.getBalance()=150); --balance unchanged as it cannot withdraw
+    );
+end atmTest
+\end{vdm_al}
+\bigskip
+\begin{longtable}{|l|r|r|}
+\hline
+Function or operation & Coverage & Calls \\
+\hline
+\hline
+atmTest & 100.0\% & 1 \\
+\hline
+createAtmTest & 100.0\% & 1 \\
+\hline
+depositTest & 100.0\% & 2 \\
+\hline
+ejectCardTest & 100.0\% & 1 \\
+\hline
+insertCardTest & 100.0\% & 2 \\
+\hline
+runTest & 100.0\% & 1 \\
+\hline
+selectAccountTest & 100.0\% & 1 \\
+\hline
+setStatusTest & 100.0\% & 2 \\
+\hline
+withdrawTest & 100.0\% & 2 \\
+\hline
+\hline
+atmTest.vdmpp & 100.0\% & 13 \\
+\hline
+\end{longtable}
+\end{document}

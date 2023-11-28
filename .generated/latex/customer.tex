@@ -1,0 +1,72 @@
+\documentclass[a4paper]{article}
+\usepackage{longtable}
+\usepackage[color]{vdmlisting}
+\usepackage{fullpage}
+\usepackage{hyperref}
+\begin{document}
+\title{}
+\author{}
+\begin{vdm_al}
+
+class Customer
+instance variables
+    private name: seq of char;
+    private address: seq of char;
+    private customerId: nat;
+    private accounts : set of Account;
+operations
+    public Customer: seq of char * seq of char * nat ==> Customer
+    Customer(n,add,id) == (
+        name := n;
+        address := add;
+        customerId := id;
+        accounts := {};
+    );
+    --getters/setters
+    public getCustomerId: () ==> nat
+    getCustomerId() == (return customerId);
+    public getName: () ==> seq of char
+    getName() == (return name);
+    public getAddress: () ==> seq of char
+    getAddress() == (return address);
+    public getAccs: () ==> set of Account
+    getAccs() == (
+        return accounts;
+    );
+    public addAccount: Account ==> ()
+    addAccount(newAcc) == (
+        accounts := accounts union {newAcc};
+    );
+    public removeAccount: Account ==> ()
+    removeAccount(rmvAcc) == (
+        accounts := accounts \ {rmvAcc};
+    );
+end Customer
+\end{vdm_al}
+\bigskip
+\begin{longtable}{|l|r|r|}
+\hline
+Function or operation & Coverage & Calls \\
+\hline
+\hline
+Customer & 100.0\% & 14 \\
+\hline
+Customer & 100.0\% & 14 \\
+\hline
+addAccount & 100.0\% & 6 \\
+\hline
+getAccs & 100.0\% & 21 \\
+\hline
+getAddress & 100.0\% & 1 \\
+\hline
+getCustomerId & 100.0\% & 1 \\
+\hline
+getName & 100.0\% & 1 \\
+\hline
+removeAccount & 100.0\% & 2 \\
+\hline
+\hline
+customer.vdmpp & 100.0\% & 60 \\
+\hline
+\end{longtable}
+\end{document}

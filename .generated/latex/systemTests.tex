@@ -1,0 +1,45 @@
+\documentclass[a4paper]{article}
+\usepackage{longtable}
+\usepackage[color]{vdmlisting}
+\usepackage{fullpage}
+\usepackage{hyperref}
+\begin{document}
+\title{}
+\author{}
+\begin{vdm_al}
+
+class systemTests
+ operations
+    --unit tests
+    public Run: () ==> ()
+    Run() == (
+        let ts : TestSuite = new TestSuite(),
+        TestResult = new TestResult()
+        in (ts.addTest(new customerTest());
+            ts.addTest(new accountTest());
+            ts.addTest(new cardTest());
+            ts.addTest(new atmTest());
+            ts.addTest(new bankTest());
+            ts.addTest(new transactionTest());
+            ts.addTest(new scenarioTest());
+            ts.run(TestResult);
+            IO`println(TestResult.toString());
+        );
+    );
+end systemTests
+\end{vdm_al}
+\bigskip
+\begin{longtable}{|l|r|r|}
+\hline
+Function or operation & Coverage & Calls \\
+\hline
+\hline
+Run & 100.0\% & 1 \\
+\hline
+systemTests & 100.0\% & 1 \\
+\hline
+\hline
+systemTests.vdmpp & 100.0\% & 2 \\
+\hline
+\end{longtable}
+\end{document}

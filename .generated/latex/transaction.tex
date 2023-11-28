@@ -1,3 +1,12 @@
+\documentclass[a4paper]{article}
+\usepackage{longtable}
+\usepackage[color]{vdmlisting}
+\usepackage{fullpage}
+\usepackage{hyperref}
+\begin{document}
+\title{}
+\author{}
+\begin{vdm_al}
 
 class Transaction
 types
@@ -6,7 +15,7 @@ instance variables
     public amount: real;
     public type : Type; 
     public id : nat; --Id will be the cardinality of transactions in a class, e.g 2 classes can both have transactions with id 1
-    --Could add a note to transaction?
+    --note : seq of char?
 operations
     public Transaction: real * Type * nat ==> Transaction
     Transaction(val,t_type,i) == (
@@ -28,3 +37,25 @@ operations
     public getId: () ==> nat
     getId() == (return id;);
 end Transaction
+\end{vdm_al}
+\bigskip
+\begin{longtable}{|l|r|r|}
+\hline
+Function or operation & Coverage & Calls \\
+\hline
+\hline
+Transaction & 100.0\% & 10 \\
+\hline
+Transaction & 100.0\% & 10 \\
+\hline
+getAmount & 100.0\% & 4 \\
+\hline
+getId & 100.0\% & 1 \\
+\hline
+getType & 100.0\% & 4 \\
+\hline
+\hline
+transaction.vdmpp & 100.0\% & 29 \\
+\hline
+\end{longtable}
+\end{document}

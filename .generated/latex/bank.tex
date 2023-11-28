@@ -1,3 +1,12 @@
+\documentclass[a4paper]{article}
+\usepackage{longtable}
+\usepackage[color]{vdmlisting}
+\usepackage{fullpage}
+\usepackage{hyperref}
+\begin{document}
+\title{}
+\author{}
+\begin{vdm_al}
 --Bank class handles customer accusition, validations, blocking of cards etc
 --main logic is performed here
 
@@ -9,9 +18,9 @@ instance variables
     private atm : Atm; --bank owns atms
     private validCards : set of Card := {}; --cards associated with this bank
     private blockedCards : set of Card := {}; --cards r blocked if pin is wrong 3 times
+    inv validCards inter blockedCards = {}; --card cant be both blocked and valid at same time
     private cusAccMap : map Customer to set of Account := {|->};
     --Maps customers to their set of accounts
-    inv validCards inter blockedCards = {}; --card cant be both blocked and valid at same time
 
 operations
     public Bank: nat * seq of char ==> Bank
@@ -104,3 +113,51 @@ operations
         return (cardUT in set validCards);  
     );
 end Bank
+\end{vdm_al}
+\bigskip
+\begin{longtable}{|l|r|r|}
+\hline
+Function or operation & Coverage & Calls \\
+\hline
+\hline
+Bank & 100.0\% & 13 \\
+\hline
+Bank & 100.0\% & 13 \\
+\hline
+addAccountToUser & 100.0\% & 6 \\
+\hline
+addCardToAccount & 100.0\% & 2 \\
+\hline
+addCardToValid & 100.0\% & 6 \\
+\hline
+addCustomer & 100.0\% & 2 \\
+\hline
+blockCard & 100.0\% & 1 \\
+\hline
+doesCustomerExist & 100.0\% & 4 \\
+\hline
+getAccountsFromCustomer & 100.0\% & 2 \\
+\hline
+getAtm & 100.0\% & 7 \\
+\hline
+getBlockedCards & 100.0\% & 1 \\
+\hline
+getCusAccMap & 100.0\% & 1 \\
+\hline
+getId & 100.0\% & 1 \\
+\hline
+getName & 100.0\% & 1 \\
+\hline
+getValidCards & 100.0\% & 1 \\
+\hline
+removeAccountFromUser & 100.0\% & 2 \\
+\hline
+removeCustomer & 100.0\% & 1 \\
+\hline
+validateCard & 100.0\% & 28 \\
+\hline
+\hline
+bank.vdmpp & 100.0\% & 92 \\
+\hline
+\end{longtable}
+\end{document}

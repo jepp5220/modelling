@@ -1,3 +1,12 @@
+\documentclass[a4paper]{article}
+\usepackage{longtable}
+\usepackage[color]{vdmlisting}
+\usepackage{fullpage}
+\usepackage{hyperref}
+\begin{document}
+\title{}
+\author{}
+\begin{vdm_al}
 
 class customerTest is subclass of TestCase --testcase is a class in vdmunit
 operations
@@ -16,16 +25,20 @@ operations
       assertTrue(cust_UUT.getAddress() = "Skovvej");
       assertFalse(card(cust_UUT.getAccs()) <> 0); --same as assert true, card = 0
       assertTrue(cust_UUT.getCustomerId() = 21);
+      --assertTrue(1 = 0 );
 
     );
     protected addAccountTest: () ==> ()
     addAccountTest() == (
       dcl cust_uut : Customer := new Customer("Jens","Skovvej",21);
       dcl acc : Account := new Account(cust_uut,500); --this behaviour is tested in acc test class
+      --assterTrue(acc_UUT.getBalance = 500);
       assertTrue(card(cust_uut.getAccs())=0); --testing if creating acc couples it to customer
+      --currently shouldnt, but should in final version
       cust_uut.addAccount(acc);
       assertTrue(card(cust_uut.getAccs())>0); --acc list has changed
       assertTrue({acc} subset cust_uut.getAccs()); --acc is part of the set of accs associated
+      --assertTrue(1 = 0 );
     );
     protected removeAccountTest: () ==> ()
     removeAccountTest() == (
@@ -36,5 +49,28 @@ operations
       cust_uut.removeAccount(acc);
       assertTrue(card(cust_uut.getAccs())=0);
       assertFalse({acc} subset cust_uut.getAccs());
+      --assertTrue(1 = 0);
     );
 end customerTest
+\end{vdm_al}
+\bigskip
+\begin{longtable}{|l|r|r|}
+\hline
+Function or operation & Coverage & Calls \\
+\hline
+\hline
+addAccountTest & 100.0\% & 1 \\
+\hline
+createCustomerTest & 100.0\% & 1 \\
+\hline
+customerTest & 100.0\% & 1 \\
+\hline
+removeAccountTest & 100.0\% & 1 \\
+\hline
+runTest & 100.0\% & 1 \\
+\hline
+\hline
+customerTest.vdmpp & 100.0\% & 5 \\
+\hline
+\end{longtable}
+\end{document}

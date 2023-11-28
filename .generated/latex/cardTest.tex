@@ -1,0 +1,94 @@
+\documentclass[a4paper]{article}
+\usepackage{longtable}
+\usepackage[color]{vdmlisting}
+\usepackage{fullpage}
+\usepackage{hyperref}
+\begin{document}
+\title{}
+\author{}
+\begin{vdm_al}
+
+class cardTest is subclass of TestCase
+instance variables
+    --auxiliary classes/instances needed to create our card
+    aux_cus : Customer := new Customer("Jeppe","Skovvej",33);
+    aux_acc : Account := new Account(aux_cus,300);
+operations
+    public runTest : () ==> ()
+    runTest() == (
+        createCardTest();
+        --cardInvTests();
+        setPinTest();
+        setAccountTest();
+        validatePinTest();
+
+    );
+    protected createCardTest: () ==> ()
+    createCardTest() ==(
+        dcl card_uut : Card := new Card([1,2,3,4],"Jeppe",[9,9,9,9],aux_acc);
+        assertTrue(card_uut.getCardNumber() = [1,2,3,4]);
+        assertTrue(card_uut.getAcc() = aux_acc);
+        assertTrue(card_uut.getCardOwner()="Jeppe");
+        --assertTrue(1=0);
+    );
+    
+    --Tests the invariants, will add breakpoint in debugging so only run once to test
+    protected cardInvTests : () ==> ()
+    cardInvTests() == (
+        dcl card_uut : Card := new Card([1,2,3,4,8,9,0],"Jeppe",[9,9,9,9,9,9],aux_acc);
+        assertTrue(card_uut.getCardOwner()="Jeppe");
+    ); 
+
+    protected setPinTest: () ==> ()
+    setPinTest() == (
+        dcl card_uut : Card := new Card([1,2,3,4],"Jeppe",[9,9,9,9],aux_acc);
+        assertTrue(card_uut.getPinCode()=[9,9,9,9]);
+        card_uut.setPinCode([0,2,4,6]);
+        assertFalse(card_uut.getPinCode()=[9,9,9,9]);
+        assertTrue(card_uut.getPinCode()=[0,2,4,6]);
+    );
+    protected setAccountTest:()==>()
+    setAccountTest() == (
+        dcl card_uut : Card := new Card([1,2,3,4],"Jeppe",[9,9,9,9],aux_acc);
+        dcl new_acc : Account := new Account(nil,200); --utilizing the fact that owner:Customer is optional type
+        assertTrue(card_uut.getAcc()=aux_acc);
+        assertTrue(1=1);
+        card_uut.setAccount(new_acc);
+        --these are technically not redundant, 
+        --they test that the acc has properly changed to the new one, and that the new one isnt identical to the old one
+        assertTrue(card_uut.getAcc()=new_acc);
+        assertTrue(card_uut.getAcc()<>aux_acc);
+    );
+    protected validatePinTest: () ==> ()
+    validatePinTest() == (
+        dcl card_uut : Card := new Card([1,2,3,4],"Jeppe",[9,9,9,9],aux_acc);
+        assertFalse(card_uut.validatePin([5,6,7,8]));
+        assertTrue(card_uut.validatePin([9,9,9,9]));
+    );
+end cardTest
+\end{vdm_al}
+\bigskip
+\begin{longtable}{|l|r|r|}
+\hline
+Function or operation & Coverage & Calls \\
+\hline
+\hline
+cardInvTests & 0.0\% & 0 \\
+\hline
+cardTest & 87.0\% & 1 \\
+\hline
+createCardTest & 100.0\% & 1 \\
+\hline
+runTest & 100.0\% & 1 \\
+\hline
+setAccountTest & 100.0\% & 1 \\
+\hline
+setPinTest & 100.0\% & 1 \\
+\hline
+validatePinTest & 100.0\% & 1 \\
+\hline
+\hline
+cardTest.vdmpp & 87.0\% & 6 \\
+\hline
+\end{longtable}
+\end{document}

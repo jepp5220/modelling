@@ -1,3 +1,12 @@
+\documentclass[a4paper]{article}
+\usepackage{longtable}
+\usepackage[color]{vdmlisting}
+\usepackage{fullpage}
+\usepackage{hyperref}
+\begin{document}
+\title{}
+\author{}
+\begin{vdm_al}
 --This class creates a list of scenarios to ensure compatability between the different modules
 --and serves as an integration test of the system. It's been attempted to ensure all
 --key components of the system is exercised in here. 
@@ -37,7 +46,7 @@ operations
         atm.insertCard(ccard, [2,1,2,4]); --Should print "Wrong Pin"
 
         --Trying to deposit when no card inserted
-        --atm.deposit(5); --breaks due to precon as expected, hence commented out. 
+        --atm.deposit(5); --breaks due to precon as expected
         
         --inserting correct card, twice
         atm.insertCard(ccard, [9,9,9,9]);
@@ -84,3 +93,25 @@ operations
         assertTrue((hd list).getAmount()=5 and (hd list).getType()=<Withdrawal>); --oldest(first in seq) is the withdrawal of 5
     );
 end scenarioTest
+\end{vdm_al}
+\bigskip
+\begin{longtable}{|l|r|r|}
+\hline
+Function or operation & Coverage & Calls \\
+\hline
+\hline
+checkTransactions & 100.0\% & 1 \\
+\hline
+getCardBlocked & 100.0\% & 1 \\
+\hline
+initialCreation & 100.0\% & 1 \\
+\hline
+runTest & 100.0\% & 1 \\
+\hline
+scenarioTest & 100.0\% & 1 \\
+\hline
+\hline
+scenarioTest.vdmpp & 100.0\% & 5 \\
+\hline
+\end{longtable}
+\end{document}
