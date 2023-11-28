@@ -1,3 +1,4 @@
+
 class Customer
 instance variables
     private name: seq of char;
@@ -12,8 +13,6 @@ operations
         customerId := id;
         accounts := {};
     );
-
-    --customerid needs to be fixed
     --getters/setters
     public getCustomerId: () ==> nat
     getCustomerId() == (return customerId);
@@ -25,7 +24,6 @@ operations
     getAccs() == (
         return accounts;
     );
-
     public addAccount: Account ==> ()
     addAccount(newAcc) == (
         accounts := accounts union {newAcc};
@@ -34,6 +32,4 @@ operations
     removeAccount(rmvAcc) == (
         accounts := accounts \ {rmvAcc};
     );
-
-
 end Customer

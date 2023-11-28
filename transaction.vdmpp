@@ -1,3 +1,4 @@
+
 class Transaction
 types
     public Type = <Deposit> | <Withdrawal>;

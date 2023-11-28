@@ -1,5 +1,7 @@
+
 class systemTests
  operations
+    --unit tests
     public Run: () ==> ()
     Run() == (
         let ts : TestSuite = new TestSuite(),
@@ -10,6 +12,7 @@ class systemTests
             ts.addTest(new atmTest());
             ts.addTest(new bankTest());
             ts.addTest(new transactionTest());
+            ts.addTest(new scenarioTest());
             ts.run(TestResult);
             IO`println(TestResult.toString());
         );

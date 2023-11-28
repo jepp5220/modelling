@@ -4,7 +4,7 @@ class Account
 instance variables
     private owner: [Customer]; --optional, to allow for 'removeaccfromuser'. Could be an issue with an acc with lots of money having no owner. 
     private balance: nat;
-    inv balance >= 0;
+    inv balance >= 0; 
     private trans_list : seq of Transaction := []; --empty seq. of transactons
 operations
     public Account: [Customer] * nat ==> Account

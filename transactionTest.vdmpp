@@ -1,3 +1,4 @@
+
 class transactionTest is subclass of TestCase --testcase is a class in vdmunit
 operations
     public runTest : () ==> ()

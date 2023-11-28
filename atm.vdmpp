@@ -1,3 +1,4 @@
+
 class Dispensor -- the actual till. Make it part of atm?
 instance variables
     private avaliableFunds: nat;
@@ -86,6 +87,7 @@ operations
     --'proper' functions
     public withdraw: nat1 ==> ()
     withdraw(amount) == (
+        if currentAcc = nil then return;
         if cashDispensor.getAvaliable() < amount then (
             IO`println("Machine cannot fullfill this request.");
             return;
@@ -111,8 +113,7 @@ operations
 
     public deposit: nat1 ==> ()
     deposit(amount) == (
-        --pre acc/card/occupancy
-        --eventuelt check currentAcc balance og sikre at den bliver ændret
+        --if (currentAcc = nil) then return;
         dcl initial_balance : nat := currentAcc.getBalance();
         cashDispensor.addMoney(amount);
         currentAcc.addMoney(amount);
@@ -120,7 +121,8 @@ operations
         if (initial_balance = currentAcc.getBalance()) then (
             IO`println("An error has occured. The bank has been notified, please hold.")
         ); --not sure how better to implement this
-    );
+    )
+    pre currentAcc <> nil;
 
 
 

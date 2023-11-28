@@ -1,3 +1,4 @@
+
 class atmTest is subclass of TestCase
 instance variables
     aux_bank : Bank := new Bank(0,"aux_bank_name");

@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"vdm-vscode.server.development.experimentalServer": false,
+        "vdm-vscode.server.plugins": [
+            {
+                "classname": "quickcheck.plugin.QuickCheckLSPPlugin",
+                "dialects": [ "vdmsl", "vdmpp" ],
+                "jar": "E:/dump/UNI/modelling/quickcheck-4.5.0-SNAPSHOT.jar",
+                "name": "QuickCheck Plugin"
+            }
+        ]
+	}
+}

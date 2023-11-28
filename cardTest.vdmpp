@@ -1,3 +1,4 @@
+
 class cardTest is subclass of TestCase
 instance variables
     --auxiliary classes/instances needed to create our card
@@ -10,6 +11,7 @@ operations
         --cardInvTests();
         setPinTest();
         setAccountTest();
+        validatePinTest();
 
     );
     protected createCardTest: () ==> ()

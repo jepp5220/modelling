@@ -9,6 +9,7 @@ instance variables
     private atm : Atm; --bank owns atms
     private validCards : set of Card := {}; --cards associated with this bank
     private blockedCards : set of Card := {}; --cards r blocked if pin is wrong 3 times
+    inv validCards inter blockedCards = {}; --card cant be both blocked and valid at same time
     private cusAccMap : map Customer to set of Account := {|->};
     --Maps customers to their set of accounts
 
@@ -76,6 +77,7 @@ operations
     );
     public blockCard: Card ==> ()
     blockCard(card_tbb) == (
+        validCards := validCards \ {card_tbb};
         blockedCards := blockedCards union {card_tbb};
         IO`println("Card was blocked");
     );

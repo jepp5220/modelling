@@ -1,0 +1,86 @@
+--This class creates a list of scenarios to ensure compatability between the different modules
+--and serves as an integration test of the system. It's been attempted to ensure all
+--key components of the system is exercised in here. 
+class scenarioTest is subclass of TestCase 
+operations
+    public runTest : () ==> ()
+    runTest() == (
+        IO`println("scenario tests");
+        initialCreation();
+        getCardBlocked();
+        checkTransactions();
+    );
+
+    --A customer is created, and an account and card is associated with him
+    --It is attempted to make a withdrawal within his means
+    protected initialCreation:() ==> ()
+    initialCreation()==(
+        dcl bank : Bank := new Bank(1,"bank_test");
+        dcl user : Customer := new Customer("Jeppe","Skovvej",1);
+        dcl acc : Account := new Account(nil,500);
+        dcl ccard : Card := new Card([1,1,1,1],"Jeppe",[9,9,9,9],acc);
+        dcl atm : Atm := bank.getAtm();
+        user.addAccount(acc);
+        assertTrue(acc in set user.getAccs()); --account is properly added
+        assertTrue(acc = ccard.getAcc()); --card is properly associated
+        --since no card is inserted, should not be possible to withdraw
+        atm.withdraw(1);
+        assertTrue(acc.getBalance()=500);
+        atm.insertCard(ccard, [9,9,9,9]);
+        atm.withdraw(1);
+        assertTrue(acc.getBalance()=499); --works now as pin was validated and acc exists
+        atm.ejectCard();
+        atm.withdraw(1); --same principle, shouldnt be able to as card is ejected
+        assertTrue(acc.getBalance()=499);
+
+        --inserting card w wrong pin
+        atm.insertCard(ccard, [2,1,2,4]); --Should print "Wrong Pin"
+
+        --Trying to deposit when no card inserted
+        --atm.deposit(5); --breaks due to precon as expected
+        
+        --inserting correct card, twice
+        atm.insertCard(ccard, [9,9,9,9]);
+        --2nd time should print "Machine occupied"
+        atm.insertCard(ccard, [9,9,9,9]);
+
+    );
+    protected getCardBlocked: () ==> ()
+    getCardBlocked()==(
+        dcl bank : Bank := new Bank(1,"bank_test");
+        --dcl user : Customer := new Customer("Jeppe","Skovvej",1);
+        dcl acc : Account := new Account(nil,500);
+        dcl ccard : Card := new Card([1,1,1,1],"Jeppe",[9,9,9,9],acc);
+        dcl atm : Atm := bank.getAtm();
+        bank.addCardToValid(ccard);
+        assertTrue(bank.validateCard(ccard)); --its in the set of valid cards
+        
+        atm.insertCard(ccard, [9,9,1,1]);
+        atm.insertCard(ccard, [9,9,1,1]);
+        atm.insertCard(ccard, [9,9,1,1]);
+        --If card has been wrongfully attempted 3 times, the next attempt will block it
+        atm.insertCard(ccard, [9,9,1,1]);
+        assertFalse(bank.validateCard(ccard));
+    );
+    protected checkTransactions:()==>()
+    checkTransactions() == (
+        dcl bank : Bank := new Bank(1,"bank_test");
+        --dcl user : Customer := new Customer("Jeppe","Skovvej",1);
+        dcl acc : Account := new Account(nil,500);
+        dcl ccard : Card := new Card([1,1,1,1],"Jeppe",[9,9,9,9],acc);
+        dcl atm : Atm := bank.getAtm();
+        dcl list : seq of Transaction := [];
+        --inserting correct card/pin
+        atm.insertCard(ccard, [9,9,9,9]);
+        atm.withdraw(5); --withdrawing proper amount twice
+        assertTrue(acc.getBalance()=495);
+        atm.withdraw(10);
+        assertTrue(acc.getBalance()=485);
+        atm.deposit(15);
+        assertTrue(acc.getBalance()=500); 
+        --now we have 3 deposits of different type and value
+        list := acc.getTransactions();
+        assertTrue((hd (reverse list)).getAmount()=15 and (hd(reverse list)).getType()=<Deposit>); --most recent is deposit
+        assertTrue((hd list).getAmount()=5 and (hd list).getType()=<Withdrawal>); --oldest(first in seq) is the withdrawal of 5
+    );
+end scenarioTest

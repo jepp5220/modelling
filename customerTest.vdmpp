@@ -1,3 +1,4 @@
+
 class customerTest is subclass of TestCase --testcase is a class in vdmunit
 operations
     public runTest : () ==> ()
@@ -41,5 +42,4 @@ operations
       assertFalse({acc} subset cust_uut.getAccs());
       --assertTrue(1 = 0);
     );
-    
 end customerTest
