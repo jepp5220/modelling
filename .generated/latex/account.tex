@@ -13,7 +13,7 @@ class Account
 instance variables
     private owner: [Customer]; --optional, to allow for 'removeaccfromuser'. Could be an issue with an acc with lots of money having no owner. 
     private balance: nat;
-    inv balance >= 0; 
+    inv balance >= 0; --Our current model does not allow overdrafts
     private trans_list : seq of Transaction := []; --empty seq. of transactons
 operations
     public Account: [Customer] * nat ==> Account
@@ -86,30 +86,30 @@ end Account
 Function or operation & Coverage & Calls \\
 \hline
 \hline
-Account & 100.0\% & 22 \\
+Account & 100.0\% & 13 \\
 \hline
-Account & 100.0\% & 34 \\
+Account & 100.0\% & 18 \\
 \hline
-addMoney & 100.0\% & 3 \\
+addMoney & 100.0\% & 1 \\
 \hline
-createTransaction & 100.0\% & 9 \\
+createTransaction & 100.0\% & 3 \\
 \hline
-getBalance & 100.0\% & 30 \\
+getBalance & 100.0\% & 7 \\
 \hline
 getOwner & 100.0\% & 5 \\
 \hline
-getTransactions & 100.0\% & 4 \\
+getTransactions & 100.0\% & 3 \\
 \hline
-removeOwner & 100.0\% & 2 \\
+removeOwner & 100.0\% & 1 \\
 \hline
-setMoney & 100.0\% & 3 \\
+setMoney & 100.0\% & 2 \\
 \hline
-setOwner & 100.0\% & 4 \\
+setOwner & 100.0\% & 1 \\
 \hline
-withdrawMoney & 100.0\% & 7 \\
+withdrawMoney & 100.0\% & 3 \\
 \hline
 \hline
-account.vdmpp & 100.0\% & 123 \\
+account.vdmpp & 100.0\% & 57 \\
 \hline
 \end{longtable}
 \end{document}

@@ -40,7 +40,6 @@ instance variables
     private associatedBank: Bank;
     private currentCard: [Card]; --optional type, as it can be empty/free
     private currentAcc: [Account];
-    --inv if Status = <Offline> then Occupancy = <Occupied>;
 operations
     public Atm: nat * Bank * seq of char * nat==> Atm
     Atm(id,aBank,loc,money) == (
@@ -145,7 +144,7 @@ operations
             insertedCard.setAttempts(insertedCard.getAttempts()+1);
         if associatedBank.validateCard(insertedCard) = false then IO`println("Card not recognized.");
     )
-    pre len(pinattempt) = 4;
+    pre len(pinattempt) = 4 and atmStatus = <Online>;
     
     --Simulates the ejection of a card, i.e going back to default state of atm.
     public ejectCard: () ==> () 

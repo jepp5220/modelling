@@ -18,9 +18,9 @@ instance variables
     private atm : Atm; --bank owns atms
     private validCards : set of Card := {}; --cards associated with this bank
     private blockedCards : set of Card := {}; --cards r blocked if pin is wrong 3 times
-    inv validCards inter blockedCards = {}; --card cant be both blocked and valid at same time
     private cusAccMap : map Customer to set of Account := {|->};
     --Maps customers to their set of accounts
+    inv validCards inter blockedCards = {}; --card cant be both blocked and valid at same time
 
 operations
     public Bank: nat * seq of char ==> Bank
@@ -120,44 +120,44 @@ end Bank
 Function or operation & Coverage & Calls \\
 \hline
 \hline
-Bank & 100.0\% & 13 \\
+Bank & 28.2\% & 1 \\
 \hline
-Bank & 100.0\% & 13 \\
+Bank & 100.0\% & 1 \\
 \hline
-addAccountToUser & 100.0\% & 6 \\
+addAccountToUser & 0.0\% & 0 \\
 \hline
-addCardToAccount & 100.0\% & 2 \\
+addCardToAccount & 0.0\% & 0 \\
 \hline
-addCardToValid & 100.0\% & 6 \\
+addCardToValid & 100.0\% & 2 \\
 \hline
-addCustomer & 100.0\% & 2 \\
+addCustomer & 0.0\% & 0 \\
 \hline
-blockCard & 100.0\% & 1 \\
+blockCard & 0.0\% & 0 \\
 \hline
-doesCustomerExist & 100.0\% & 4 \\
+doesCustomerExist & 0.0\% & 0 \\
 \hline
-getAccountsFromCustomer & 100.0\% & 2 \\
+getAccountsFromCustomer & 0.0\% & 0 \\
 \hline
-getAtm & 100.0\% & 7 \\
+getAtm & 100.0\% & 3 \\
 \hline
-getBlockedCards & 100.0\% & 1 \\
+getBlockedCards & 0.0\% & 0 \\
 \hline
-getCusAccMap & 100.0\% & 1 \\
+getCusAccMap & 0.0\% & 0 \\
 \hline
-getId & 100.0\% & 1 \\
+getId & 0.0\% & 0 \\
 \hline
-getName & 100.0\% & 1 \\
+getName & 0.0\% & 0 \\
 \hline
-getValidCards & 100.0\% & 1 \\
+getValidCards & 0.0\% & 0 \\
 \hline
-removeAccountFromUser & 100.0\% & 2 \\
+removeAccountFromUser & 0.0\% & 0 \\
 \hline
-removeCustomer & 100.0\% & 1 \\
+removeCustomer & 0.0\% & 0 \\
 \hline
-validateCard & 100.0\% & 28 \\
+validateCard & 100.0\% & 5 \\
 \hline
 \hline
-bank.vdmpp & 100.0\% & 92 \\
+bank.vdmpp & 28.2\% & 12 \\
 \hline
 \end{longtable}
 \end{document}

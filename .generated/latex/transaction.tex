@@ -15,7 +15,7 @@ instance variables
     public amount: real;
     public type : Type; 
     public id : nat; --Id will be the cardinality of transactions in a class, e.g 2 classes can both have transactions with id 1
-    --note : seq of char?
+    --Could add a note to transaction?
 operations
     public Transaction: real * Type * nat ==> Transaction
     Transaction(val,t_type,i) == (
@@ -44,18 +44,18 @@ end Transaction
 Function or operation & Coverage & Calls \\
 \hline
 \hline
-Transaction & 100.0\% & 10 \\
+Transaction & 90.9\% & 3 \\
 \hline
-Transaction & 100.0\% & 10 \\
+Transaction & 100.0\% & 3 \\
 \hline
-getAmount & 100.0\% & 4 \\
+getAmount & 100.0\% & 1 \\
 \hline
-getId & 100.0\% & 1 \\
+getId & 0.0\% & 0 \\
 \hline
-getType & 100.0\% & 4 \\
+getType & 100.0\% & 1 \\
 \hline
 \hline
-transaction.vdmpp & 100.0\% & 29 \\
+transaction.vdmpp & 90.9\% & 8 \\
 \hline
 \end{longtable}
 \end{document}

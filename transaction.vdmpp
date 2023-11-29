@@ -3,12 +3,11 @@ class Transaction
 types
     public Type = <Deposit> | <Withdrawal>;
 instance variables
-    public amount: real;
+    public amount: nat1;
     public type : Type; 
     public id : nat; --Id will be the cardinality of transactions in a class, e.g 2 classes can both have transactions with id 1
-    --Could add a note to transaction?
 operations
-    public Transaction: real * Type * nat ==> Transaction
+    public Transaction: nat1 * Type * nat ==> Transaction
     Transaction(val,t_type,i) == (
         amount := val;
         type := t_type;
