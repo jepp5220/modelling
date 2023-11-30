@@ -42,9 +42,9 @@ operations
       dcl acc : Account := new Account(cust_uut,500); 
       cust_uut.addAccount(acc); --Behaviour verified in addAccountTest()
       assertTrue(card(cust_uut.getAccs())=1); --also tested above
+      assertTrue({acc} subset cust_uut.getAccs());
       cust_uut.removeAccount(acc);
       assertTrue(card(cust_uut.getAccs())=0);
-      assertFalse({acc} subset cust_uut.getAccs());
     );
 end customerTest
 \end{vdm_al}

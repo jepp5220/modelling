@@ -29,7 +29,6 @@ operations
         return self;
     );
     --Getters/Setters
-    --getcnumber, get owner, get exp date
     public getCardNumber: () ==> seq of nat
     getCardNumber()==(return cardNumber);
     
@@ -41,7 +40,6 @@ operations
     public setAttempts:(nat) ==> ()
     setAttempts(num) == (
         invalidAttempts:=num;
-        --if invalidAttempts >= 3 then blockCard();
     );
     public getAttempts:() ==> nat
     getAttempts()==(return invalidAttempts;);

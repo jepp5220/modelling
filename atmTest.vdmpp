@@ -54,14 +54,11 @@ operations
         --dcl atm_uut : Atm := new Atm(0,aux_bank,"aux_bank_location",5000); 
         dcl atm_uut : Atm := aux_bank.getAtm();
         dcl aux_card : Card := new Card([1,2,3,4],"Jeppe",[9,9,9,9],aux_acc);
+        atm_uut.setStatus(<Online>);
         assertTrue(atm_uut.isFree()); --free default
         atm_uut.insertCard(aux_card,[9,9,9,9]); 
-
-
         aux_bank.addCardToValid(aux_card); --validate should work now
         assertTrue(aux_bank.validateCard(aux_card)); --Checking to ensure
-        --assertTrue(atm_uut.getBank()=aux_bank);
-        --assertTrue(aux_bank.getAtm()=atm_uut);
         atm_uut.insertCard(aux_card,[9,9,9,9]);
         assertFalse(atm_uut.isFree()); 
     );
@@ -84,6 +81,7 @@ operations
         dcl atm_uut : Atm := aux_bank.getAtm();
         dcl aux_card : Card := new Card([1,2,3,4],"Jeppe",[9,9,9,9],aux_acc);
         dcl initBal : nat := aux_acc.getBalance();
+        IO`println("starting withdraw test");
         aux_bank.addCardToValid(aux_card); --card recognized now
         atm_uut.insertCard(aux_card,[9,9,9,9]);
         assertFalse(atm_uut.isFree());
@@ -95,5 +93,6 @@ operations
         --balance is now 150, attempting to withdraw more
         atm_uut.withdraw(151);
         assertTrue(aux_acc.getBalance()=150); --balance unchanged as it cannot withdraw
+        IO`println("endd withdraw test")
     );
 end atmTest

@@ -12,12 +12,11 @@ class Transaction
 types
     public Type = <Deposit> | <Withdrawal>;
 instance variables
-    public amount: real;
+    public amount: nat1;
     public type : Type; 
     public id : nat; --Id will be the cardinality of transactions in a class, e.g 2 classes can both have transactions with id 1
-    --Could add a note to transaction?
 operations
-    public Transaction: real * Type * nat ==> Transaction
+    public Transaction: nat1 * Type * nat ==> Transaction
     Transaction(val,t_type,i) == (
         amount := val;
         type := t_type;
@@ -44,18 +43,18 @@ end Transaction
 Function or operation & Coverage & Calls \\
 \hline
 \hline
-Transaction & 90.9\% & 3 \\
+Transaction & 100.0\% & 10 \\
 \hline
-Transaction & 100.0\% & 3 \\
+Transaction & 100.0\% & 10 \\
 \hline
-getAmount & 100.0\% & 1 \\
+getAmount & 100.0\% & 4 \\
 \hline
-getId & 0.0\% & 0 \\
+getId & 100.0\% & 1 \\
 \hline
-getType & 100.0\% & 1 \\
+getType & 100.0\% & 4 \\
 \hline
 \hline
-transaction.vdmpp & 90.9\% & 8 \\
+transaction.vdmpp & 100.0\% & 29 \\
 \hline
 \end{longtable}
 \end{document}

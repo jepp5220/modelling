@@ -117,10 +117,9 @@ operations
         dcl initial_balance : nat := currentAcc.getBalance();
         cashDispensor.addMoney(amount);
         currentAcc.addMoney(amount);
-        --If the acc didnt properly change balance.
         if (initial_balance = currentAcc.getBalance()) then (
             IO`println("An error has occured. The bank has been notified, please hold.")
-        ); --not sure how better to implement this
+        ); 
     )
     pre currentAcc <> nil and atmStatus = <Online>;
 

@@ -38,7 +38,6 @@ operations
         return self;
     );
     --Getters/Setters
-    --getcnumber, get owner, get exp date
     public getCardNumber: () ==> seq of nat
     getCardNumber()==(return cardNumber);
     
@@ -50,7 +49,6 @@ operations
     public setAttempts:(nat) ==> ()
     setAttempts(num) == (
         invalidAttempts:=num;
-        --if invalidAttempts >= 3 then blockCard();
     );
     public getAttempts:() ==> nat
     getAttempts()==(return invalidAttempts;);
@@ -84,15 +82,15 @@ end Card
 Function or operation & Coverage & Calls \\
 \hline
 \hline
-Card & 100.0\% & 6 \\
+Card & 100.0\% & 12 \\
 \hline
-Card & 86.6\% & 7 \\
+Card & 100.0\% & 14 \\
 \hline
-Card:25 & 0.0\% & 0 \\
+Card:25 & 100.0\% & 1 \\
 \hline
-getAcc & 100.0\% & 7 \\
+getAcc & 100.0\% & 16 \\
 \hline
-getAttempts & 100.0\% & 4 \\
+getAttempts & 100.0\% & 22 \\
 \hline
 getCardNumber & 100.0\% & 1 \\
 \hline
@@ -100,16 +98,16 @@ getCardOwner & 100.0\% & 1 \\
 \hline
 getPinCode & 100.0\% & 3 \\
 \hline
-setAccount & 100.0\% & 1 \\
+setAccount & 100.0\% & 2 \\
 \hline
-setAttempts & 100.0\% & 6 \\
+setAttempts & 100.0\% & 21 \\
 \hline
 setPinCode & 100.0\% & 1 \\
 \hline
-validatePin & 100.0\% & 5 \\
+validatePin & 100.0\% & 15 \\
 \hline
 \hline
-card.vdmpp & 86.6\% & 42 \\
+card.vdmpp & 100.0\% & 109 \\
 \hline
 \end{longtable}
 \end{document}

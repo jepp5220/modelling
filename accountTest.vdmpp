@@ -18,7 +18,6 @@ operations
     createAccountTest() == (
       dcl startCap : nat := 100;
       dcl acc_uut : Account := new Account(cust,startCap); --100$ start capital
-      --check what happens when u declare negative
       assertTrue(acc_uut.getBalance() = startCap);
     );
 
